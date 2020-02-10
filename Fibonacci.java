@@ -1,5 +1,6 @@
+// The fibonacci sequence is defined as 0, 1, 1, 2, 3 ...
 public class Fibonacci {
-    // sequence is defined as 0, 1, 1, 2, 3 ...
+    // Runtime is O(n)
     public static int fibonacciIterative(int n) {
         if (n < 1) {
             return 0;
@@ -15,6 +16,7 @@ public class Fibonacci {
         return fib;
     }
 
+    // Runtime is O(2 ^ n)
     public static int fibonacciRecursive(int n) {
         if (n <= 1) {
             return n;
@@ -22,6 +24,7 @@ public class Fibonacci {
         return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
     }
 
+    // Runtime is O(n)
     public static int fibonacciMemoization(int n, int[] array) {
         if (array[n] != 0) {
             return array[n];
