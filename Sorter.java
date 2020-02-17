@@ -4,7 +4,7 @@ import java.util.Random;
 public class Sorter {
     public static void main(String[] args) {
         // size of input
-        int n = 20000;
+        int n = 12;
         int[] input = generateInput(n);
         // calculate elapse time for bubble sort
         long startTime = System.nanoTime();
@@ -26,7 +26,13 @@ public class Sorter {
         endTime = System.nanoTime();
         System.out.println("Insertion Sorted Array: " + Arrays.toString(input));
         System.out.printf("Time elapsed for Insertion Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
-
+        // calculate elapse time for bogo sort
+        input = generateInput(n);
+        startTime = System.nanoTime();
+        bogoSort(input);
+        endTime = System.nanoTime();
+        System.out.println("Bogo Sorted Array: " + Arrays.toString(input));
+        System.out.printf("Time elapsed for Bogo Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
     }
 
     // Worst case: O(n ^ 2)
@@ -67,13 +73,21 @@ public class Sorter {
     // Worst case: O(n ^ 2)
     private static void insertionSort(int[] input) {
         for (int i = 1; i < input.length; i++) {
-            int j = i;
-            while (j >= 1 && input[j - 1] > input[j]) {
-                int temp = input[j];
-                input[j] = input[j - 1];
-                input[j - 1] = temp;
+            int j = i - 1;
+            while (j >= 0 && input[j] > input[j + 1]) {
+                int temp = input[j + 1];
+                input[j + 1] = input[j];
+                input[j] = temp;
                 j--;
             }
+        }
+    }
+
+    // Best case: O(n)
+    // Worst case: ??? Unbounded (Infinity)
+    private static void bogoSort(int[] input) {
+        while (!isSorted(input)) {
+            shuffle(input);
         }
     }
 
@@ -86,6 +100,27 @@ public class Sorter {
             input[i] = random.nextInt(n);
         }
         return input;
+    }
+
+    // shuffles an array in place using Fisher Yates shuffle
+    private static void shuffle(int[] input) {
+        Random random = new Random();
+        for (int i = input.length - 1; i > 0; i--) {
+            int randomIndex = random.nextInt(i + 1);
+            int swap = input[randomIndex];
+            input[randomIndex] = input[i];
+            input[i] = swap;
+        }
+    }
+
+    // Checks if an array is sorted
+    private static boolean isSorted(int[] input) {
+        for (int i = 1; i < input.length; i++) {
+            if (input[i] < input[i - 1]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
