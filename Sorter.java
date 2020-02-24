@@ -4,7 +4,7 @@ import java.util.Random;
 public class Sorter {
     public static void main(String[] args) {
         // size of input
-        int n = 12;
+        int n = 10000;
         int[] input = generateInput(n);
         // calculate elapse time for bubble sort
         long startTime = System.nanoTime();
@@ -26,13 +26,21 @@ public class Sorter {
         endTime = System.nanoTime();
         System.out.println("Insertion Sorted Array: " + Arrays.toString(input));
         System.out.printf("Time elapsed for Insertion Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for bogo sort
+        // calculate elapse time for merge sort
         input = generateInput(n);
         startTime = System.nanoTime();
-        bogoSort(input);
+        mergeSort(input);
         endTime = System.nanoTime();
-        System.out.println("Bogo Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Bogo Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        System.out.println("Merge Sorted Array: " + Arrays.toString(input));
+        System.out.printf("Time elapsed for Merge Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+
+//        calculate elapse time for bogo sort
+//        input = generateInput(n);
+//        startTime = System.nanoTime();
+//        bogoSort(input);
+//        endTime = System.nanoTime();
+//        System.out.println("Bogo Sorted Array: " + Arrays.toString(input));
+//        System.out.printf("Time elapsed for Bogo Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
     }
 
     // Worst case: O(n ^ 2)
@@ -88,6 +96,49 @@ public class Sorter {
     private static void bogoSort(int[] input) {
         while (!isSorted(input)) {
             shuffle(input);
+        }
+    }
+
+    // Best case: O(n log n)
+    // Worst case: O(n log n)
+    private static void mergeSort(int[] input) {
+        if (input.length < 10) {
+            selectionSort(input);
+            return;
+        }
+        int mid = input.length / 2;
+        // Create sub arrays
+        int[] firstHalf = new int[mid];
+        int[] secondHalf = new int[input.length - mid];
+        // Initialise values
+        System.arraycopy(input, 0, firstHalf, 0, firstHalf.length);
+        System.arraycopy(input, mid, secondHalf, 0, secondHalf.length);
+        mergeSort(firstHalf);
+        mergeSort(secondHalf);
+        if (firstHalf[firstHalf.length - 1] > secondHalf[0]) {
+            merge(firstHalf, secondHalf, input);
+        }
+    }
+
+    private static void merge(int[] firstHalf, int[] secondHalf, int[] input) {
+        int k = 0;
+        int i = 0;
+        int j = 0;
+        while (i < firstHalf.length && j < secondHalf.length) {
+            if (firstHalf[i] <= secondHalf[j]) {
+                input[k] = firstHalf[i];
+                i++;
+            } else {
+                input[k] = secondHalf[j];
+                j++;
+            }
+            k++;
+        }
+        if (i < firstHalf.length) {
+            System.arraycopy(input, k, firstHalf, i, firstHalf.length - i);
+        }
+        if (j < secondHalf.length) {
+            System.arraycopy(input, k, secondHalf, j, firstHalf.length - j);
         }
     }
 
