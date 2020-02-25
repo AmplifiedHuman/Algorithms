@@ -58,6 +58,7 @@ public class Sorter {
         }
     }
 
+
     // Best case: O(n ^ 2)
     // Worst case: O(n ^ 2)
     // Slightly faster as the exact order of growth is n ^ 2/ 2
