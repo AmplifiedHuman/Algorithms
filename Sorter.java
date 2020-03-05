@@ -90,11 +90,11 @@ public class Sorter {
     // Worst case: O(n ^ 2)
     private static void insertionSort(int[] input) {
         for (int i = 1; i < input.length; i++) {
-            int j = i - 1;
-            while (j >= 0 && input[j] > input[j + 1]) {
-                int temp = input[j + 1];
-                input[j + 1] = input[j];
-                input[j] = temp;
+            int j = i;
+            while (j >= 1 && input[j - 1] > input[j]) {
+                int temp = input[j];
+                input[j] = input[j - 1];
+                input[j - 1] = temp;
                 j--;
             }
         }
