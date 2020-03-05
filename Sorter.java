@@ -26,6 +26,13 @@ public class Sorter {
         endTime = System.nanoTime();
         System.out.println("Insertion Sorted Array: " + Arrays.toString(input));
         System.out.printf("Time elapsed for Insertion Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        // calculate elapse time for shell sort (Knuth sequence)
+        input = generateInput(n);
+        startTime = System.nanoTime();
+        shellSort(input);
+        endTime = System.nanoTime();
+        System.out.println("Shell Sorted Array: " + Arrays.toString(input));
+        System.out.printf("Time elapsed for Shell Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
         // calculate elapse time for merge sort
         input = generateInput(n);
         startTime = System.nanoTime();
@@ -33,6 +40,7 @@ public class Sorter {
         endTime = System.nanoTime();
         System.out.println("Merge Sorted Array: " + Arrays.toString(input));
         System.out.printf("Time elapsed for Merge Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+
 
 //        calculate elapse time for bogo sort
 //        input = generateInput(n);
@@ -60,7 +68,7 @@ public class Sorter {
 
 
     // Best case: O(n ^ 2)
-    // Worst case: O(n ^ 2)
+    // Worst case: O(n ^ 2) df
     // Slightly faster as the exact order of growth is n ^ 2/ 2
     private static void selectionSort(int[] input) {
         for (int i = 0; i < input.length - 1; i++) {
@@ -101,8 +109,35 @@ public class Sorter {
     }
 
     // Best case: O(n log n)
+    // Worst case: O (n ^ ( 3/2))
+    private static void shellSort(int[] input) {
+        int interval = 0;
+        // This loop stops before interval is greater than input.length
+        while (3 * interval < input.length) {
+            interval = 3 * interval + 1;
+        }
+        // We continue to sort until interval falls negative
+        while (interval > 0) {
+            for (int i = interval; i < input.length; i++) {
+                int value = input[i];
+                int j = i;
+                // shift values
+                while (j >= interval && input[j - interval] > value) {
+                    input[j] = input[j - interval];
+                    j = j - interval;
+                }
+                // found correct position of value
+                input[j] = value;
+            }
+            // Get next interval
+            interval = (interval - 1) / 3;
+        }
+    }
+
+    // Best case: O(n log n)
     // Worst case: O(n log n)
     private static void mergeSort(int[] input) {
+        // If input length is less than 10, use selection sort
         if (input.length < 10) {
             selectionSort(input);
             return;
@@ -114,8 +149,10 @@ public class Sorter {
         // Initialise values
         System.arraycopy(input, 0, firstHalf, 0, firstHalf.length);
         System.arraycopy(input, mid, secondHalf, 0, secondHalf.length);
+        // Recursively Merge Sort the two halves
         mergeSort(firstHalf);
         mergeSort(secondHalf);
+        // We only do merging if the last element of the first half is larger than the first element in second half
         if (firstHalf[firstHalf.length - 1] > secondHalf[0]) {
             merge(firstHalf, secondHalf, input);
         }
@@ -123,7 +160,9 @@ public class Sorter {
 
     private static void merge(int[] firstHalf, int[] secondHalf, int[] input) {
         int k = 0;
+        // first array running index
         int i = 0;
+        // second array running index
         int j = 0;
         while (i < firstHalf.length && j < secondHalf.length) {
             if (firstHalf[i] <= secondHalf[j]) {
@@ -135,9 +174,11 @@ public class Sorter {
             }
             k++;
         }
+        // If we haven't process all of the elements in firstHalf, copy the rest into input
         if (i < firstHalf.length) {
             System.arraycopy(input, k, firstHalf, i, firstHalf.length - i);
         }
+        // If we haven't process all of the elements in secondHalf, copy the rest into input
         if (j < secondHalf.length) {
             System.arraycopy(input, k, secondHalf, j, firstHalf.length - j);
         }
