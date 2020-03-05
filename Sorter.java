@@ -4,43 +4,56 @@ import java.util.Random;
 public class Sorter {
     public static void main(String[] args) {
         // size of input
-        int n = 10000;
+        int n = 600;
         int[] input = generateInput(n);
         // calculate elapse time for bubble sort
         long startTime = System.nanoTime();
         bubbleSort(input);
         long endTime = System.nanoTime();
         System.out.println("Bubble Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Bubble Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        System.out.printf("Time elapsed for Bubble Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
         // calculate elapse time for selection sort
         input = generateInput(n);
         startTime = System.nanoTime();
         selectionSort(input);
         endTime = System.nanoTime();
         System.out.println("Selection Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Selection Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        System.out.printf("Time elapsed for Selection Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
         // calculate elapse time for insertion sort
         input = generateInput(n);
         startTime = System.nanoTime();
         insertionSort(input);
         endTime = System.nanoTime();
         System.out.println("Insertion Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Insertion Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        System.out.printf("Time elapsed for Insertion Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
         // calculate elapse time for shell sort (Knuth sequence)
         input = generateInput(n);
         startTime = System.nanoTime();
         shellSort(input);
         endTime = System.nanoTime();
         System.out.println("Shell Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Shell Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        System.out.printf("Time elapsed for Shell Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
         // calculate elapse time for merge sort
         input = generateInput(n);
         startTime = System.nanoTime();
         mergeSort(input);
         endTime = System.nanoTime();
         System.out.println("Merge Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Merge Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
-
+        System.out.printf("Time elapsed for Merge Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
+        // calculate elapse time for quick sort
+        input = generateInput(n);
+        startTime = System.nanoTime();
+        quickSort(input);
+        endTime = System.nanoTime();
+        System.out.println("Quick Sorted Array: " + Arrays.toString(input));
+        System.out.printf("Time elapsed for Quick Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
+        // calculate elapse time for enhanced quick sort
+        input = generateInput(n);
+        startTime = System.nanoTime();
+        enhancedQuickSort(input);
+        endTime = System.nanoTime();
+        System.out.println("Enhanced Quick Sorted Array: " + Arrays.toString(input));
+        System.out.printf("Time elapsed for Enhanced Quick Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
 
 //        calculate elapse time for bogo sort
 //        input = generateInput(n);
@@ -94,6 +107,20 @@ public class Sorter {
             while (j >= 1 && input[j - 1] > input[j]) {
                 int temp = input[j];
                 input[j] = input[j - 1];
+                input[j - 1] = temp;
+                j--;
+            }
+        }
+    }
+
+    private static void insertionSort(int[] input, int low, int high) {
+        if (high <= low) {
+            return;
+        }
+        for (int i = low + 1; i < high; i++) {
+            int j = i;
+            while (j >= (low + 1) && input[j - 1] > input[j]) {
+                int temp = input[j];
                 input[j - 1] = temp;
                 j--;
             }
@@ -182,6 +209,110 @@ public class Sorter {
         if (j < secondHalf.length) {
             System.arraycopy(input, k, secondHalf, j, firstHalf.length - j);
         }
+    }
+
+    private static void enhancedQuickSort(int[] arr) {
+        shuffle(arr);
+        enhancedQuickSort(arr, 0, arr.length - 1);
+    }
+
+    private static void enhancedQuickSort(int[] arr, int low, int high) {
+        if (low + 10 > high) {
+            insertionSort(arr, low, high);
+            return;
+        }
+        if (low >= high) {
+            return;
+        }
+        // Get the pivot from partitioning
+        int pivot = enhancedPartition(arr, low, high);
+        // Quick sort upper half and lower half
+        enhancedQuickSort(arr, low, pivot - 1);
+        enhancedQuickSort(arr, pivot + 1, high);
+    }
+
+    private static int enhancedPartition(int[] arr, int low, int high) {
+        int mid = low + (high - low) / 2;
+        // sort the three elements
+        if (arr[mid] < arr[low]) {
+            int temp = arr[mid];
+            arr[mid] = arr[low];
+            arr[low] = temp;
+        }
+        if (arr[high] < arr[low]) {
+            int temp = arr[high];
+            arr[high] = arr[low];
+            arr[low] = temp;
+        }
+        if (arr[high] < arr[mid]) {
+            int temp = arr[high];
+            arr[high] = arr[mid];
+            arr[mid] = temp;
+        }
+        // swap pivot to last element
+        int swap = arr[mid];
+        arr[mid] = arr[high];
+        arr[high] = swap;
+        // Get pivotItem
+        int pivotItem = arr[high];
+        // Index of smaller element, to keep track of where we should insert the pivot
+        int i = low - 1;
+        // Ignore last element
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivotItem) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        // Swap pivot with the first bigger item
+        int temp = arr[i + 1];
+        arr[i + 1] = pivotItem;
+        arr[high] = temp;
+        // Return pivot index
+        return i + 1;
+    }
+
+    // Best case: O(n log n)
+    // Worse case: O(n ^ 2)
+    private static void quickSort(int[] arr) {
+        shuffle(arr);
+        quickSort(arr, 0, arr.length - 1);
+    }
+
+    private static void quickSort(int[] arr, int low, int high) {
+        // If one element return (base case)
+        if (low >= high) {
+            return;
+        }
+        // Get the pivot from partitioning
+        int pivot = partition(arr, low, high);
+        // Quick sort upper half and lower half
+        quickSort(arr, low, pivot - 1);
+        quickSort(arr, pivot + 1, high);
+    }
+
+    private static int partition(int[] arr, int low, int high) {
+        // Choose last element as the pivot
+        int pivotItem = arr[high];
+        // Index of smaller element, to keep track of where we should insert the pivot
+        int i = low - 1;
+        // Ignore last element
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivotItem) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        // Swap pivot with the first bigger item
+        int temp = arr[i + 1];
+        arr[i + 1] = pivotItem;
+        arr[high] = temp;
+        // Return pivot index
+        return i + 1;
     }
 
     // generates an input array of length n with bound n
