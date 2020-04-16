@@ -1,3 +1,5 @@
+package src;
+
 public class BruteForceSearch {
     // Function returns the start index of substring if found, -1 otherwise
     public static int search(String txt, String pat) {

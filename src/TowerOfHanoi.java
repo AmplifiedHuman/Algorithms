@@ -1,3 +1,5 @@
+package src;
+
 public class TowerOfHanoi {
     // Runtime is O(2 ^ n)
     public static void solveHanoi(int n, String disk, String source, String destination, String auxiliary) {
