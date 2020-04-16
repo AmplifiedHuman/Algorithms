@@ -1,5 +1,3 @@
-package src;
-
 // The fibonacci sequence is defined as 0, 1, 1, 2, 3 ...
 public class Fibonacci {
     // Runtime is O(n)

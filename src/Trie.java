@@ -1,5 +1,3 @@
-package src;
-
 public class Trie {
     public static int ALPHABET_SIZE = 26;
     private TrieNode root;
