@@ -33,3 +33,10 @@ Attribute | Performance
 Overall Runtime | O(log n), since we are halving the first number repeatedly
 Worst Case | O(log n)
 Best Case | O(log n)
+
+**Performance Analysis**
+
+![RussianPeasantGraph](/graphs/RussianPeasantGraph.png)
+
+From the graph, we can see that there's a huge spike at the very front, that is most likely due to a heavyweight initialization process. The time to complete it is included in the first measurement. Subsequent calls proceed down the fast path where the state is already initialized.  
+Overall, we can see that the runtime of the algorithm grows very slowly relative to the input (even approaching 2<sup>31</sup> - 1) and ressembles O(log n) growth which is very close to constant time O(1) performance.
