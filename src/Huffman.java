@@ -4,55 +4,38 @@ public class Huffman {
 
     /* We use 8 bits, which is 256 characters since readString reads in 8 bit characters */
     private static final int CHAR_SET_SIZE = 256;
+    private BinaryIn in;
+    private BinaryOut out;
+
+    public Huffman() {
+        in = null;
+        out = null;
+    }
 
     public static void main(String[] args) {
-        // check input arguments
-        if (args.length < 1 || args.length > 3) {
+        // check argument length
+        if (args.length != 1 && args.length != 3) {
             printHelpMessage();
             System.exit(-1);
         }
-        // first option
-        if (args.length == 1) {
-            String option = args[0];
-            if (option.equalsIgnoreCase("compress")) {
-                compress();
-            } else if (option.equalsIgnoreCase("decompress")) {
-                decompress();
-            } else {
-                printHelpMessage();
-            }
+        Huffman huffman = new Huffman();
+        if (args.length == 3) {
+            huffman.setInput(new BinaryIn(args[1]));
+            huffman.setOutput(new BinaryOut(args[2]));
         }
-    }
+        // huffman operation
+        String option = args[0];
+        if (option.equalsIgnoreCase("compress")) {
+            huffman.compress();
+        } else if (option.equalsIgnoreCase("decompress")) {
+            huffman.decompress();
+        } else {
+            printHelpMessage();
+        }
 
-    public static void compress() {
-        String input = BinaryStdIn.readString();
-        // initialise count array
-        int[] count = new int[CHAR_SET_SIZE];
-        // for every character, record and update its frequency
-        for (char ch : input.toCharArray()) {
-            count[ch] += 1;
+        if (!huffman.isStandardOutput()) {
+            huffman.getOutput().close();
         }
-        TrieNode rootNode = constructTrie(count);
-        // encoding array to store the encoding of each character
-        String[] encodingArray = new String[CHAR_SET_SIZE];
-        fillEncoding(rootNode, encodingArray, "");
-        writeTrie(rootNode);
-        // print original message length for easy decoding
-        BinaryStdOut.write(input.length());
-        for (char ch : input.toCharArray()) {
-            String encodedString = encodingArray[ch];
-            // write each character in bit representation
-            for (char bit : encodedString.toCharArray()) {
-                if (bit == '0') {
-                    BinaryStdOut.write(false);
-                } else if (bit == '1') {
-                    BinaryStdOut.write(true);
-                } else {
-                    throw new IllegalArgumentException("Undefined encoding");
-                }
-            }
-        }
-        BinaryStdOut.close();
     }
 
     private static void fillEncoding(TrieNode root, String[] encodingArray, String binaryRepresentation) {
@@ -64,18 +47,6 @@ public class Huffman {
         // left child and right child can't be null since each node has 0 or 2 children
         fillEncoding(root.leftChild, encodingArray, binaryRepresentation + "0");
         fillEncoding(root.rightChild, encodingArray, binaryRepresentation + "1");
-    }
-
-    // uses preorder DFS to write trie to output
-    private static void writeTrie(TrieNode root) {
-        if (root.isCharacterNode()) {
-            BinaryStdOut.write(true);
-            BinaryStdOut.write(root.ch, 8);
-            return;
-        }
-        BinaryStdOut.write(false);
-        writeTrie(root.leftChild);
-        writeTrie(root.rightChild);
     }
 
     private static TrieNode constructTrie(int[] count) {
@@ -99,42 +70,136 @@ public class Huffman {
         return priorityQueue.poll();
     }
 
-    private static void decompress() {
+    private static void printHelpMessage() {
+        System.out.println("Read from stdin and output to stdout: java Huffman [compress|decompress] < inputfile");
+        System.out.println("Read from input file and output to output file: java Huffman [compress|decompress] " +
+                "[inputfile] [outputfile]");
+    }
+
+    public void compress() {
+        String input = isStandardInput() ? BinaryStdIn.readString() : in.readString();
+        // initialise count array
+        int[] count = new int[CHAR_SET_SIZE];
+        // for every character, record and update its frequency
+        for (char ch : input.toCharArray()) {
+            count[ch] += 1;
+        }
+        TrieNode rootNode = constructTrie(count);
+        // encoding array to store the encoding of each character
+        String[] encodingArray = new String[CHAR_SET_SIZE];
+        fillEncoding(rootNode, encodingArray, "");
+        writeTrie(rootNode);
+        // print original message length for easy decoding
+        if (isStandardOutput()) {
+            BinaryStdOut.write(input.length());
+        } else {
+            out.write(input.length());
+        }
+        for (char ch : input.toCharArray()) {
+            String encodedString = encodingArray[ch];
+            // write each character in bit representation
+            for (char bit : encodedString.toCharArray()) {
+                if (bit != '1' && bit != '0') {
+                    throw new IllegalArgumentException("Undefined encoding");
+                }
+                boolean writeBit = bit == '1';
+                if (isStandardOutput()) {
+                    BinaryStdOut.write(writeBit);
+                } else {
+                    out.write(writeBit);
+                }
+            }
+        }
+        if (isStandardInput()) {
+            BinaryStdIn.close();
+        }
+        if (isStandardOutput()) {
+            BinaryStdOut.close();
+        }
+    }
+
+    // uses preorder DFS to write trie to output
+    private void writeTrie(TrieNode root) {
+        if (root.isCharacterNode()) {
+            if (isStandardOutput()) {
+                BinaryStdOut.write(true);
+                BinaryStdOut.write(root.ch, 8);
+            } else {
+                out.write(true);
+                out.write(root.ch, 8);
+            }
+            return;
+        }
+        if (isStandardOutput()) {
+            BinaryStdOut.write(false);
+        } else {
+            out.write(false);
+        }
+        writeTrie(root.leftChild);
+        writeTrie(root.rightChild);
+    }
+
+    private void decompress() {
         // read trie from input
         TrieNode rootNode = readTrie();
         // get original uncompressed length
-        int uncompressedLength = BinaryStdIn.readInt();
+        int uncompressedLength = isStandardInput() ? BinaryStdIn.readInt() : in.readInt();
         // decode using the trie
         for (int i = 0; i < uncompressedLength; i++) {
             TrieNode tempNode = rootNode;
             // characters nodes can't be a prefix of another character node
             while (!tempNode.isCharacterNode()) {
-                if (BinaryStdIn.readBoolean()) {
+                boolean inputBit = isStandardInput() ? BinaryStdIn.readBoolean() : in.readBoolean();
+                if (inputBit) {
                     tempNode = tempNode.rightChild;
                 } else {
                     tempNode = tempNode.leftChild;
                 }
             }
-            BinaryStdOut.write(tempNode.ch, 8);
+            if (isStandardOutput()) {
+                BinaryStdOut.write(tempNode.ch, 8);
+            } else {
+                out.write(tempNode.ch, 8);
+            }
         }
-        BinaryStdOut.close();
+        if (isStandardInput()) {
+            BinaryStdIn.close();
+        }
+        if (isStandardOutput()) {
+            BinaryStdOut.close();
+        }
     }
 
-    private static TrieNode readTrie() {
+    private TrieNode readTrie() {
+        boolean isLeafNode = isStandardInput() ? BinaryStdIn.readBoolean() : in.readBoolean();
         // if it's a character, construct leaf node
-        if (BinaryStdIn.readBoolean()) {
+        if (isLeafNode) {
             // count is 0 by default since we don't need it for decompressing
-            return new TrieNode(BinaryStdIn.readChar(8), 0, null, null);
+            char ch = isStandardInput() ? BinaryStdIn.readChar() : in.readChar();
+            return new TrieNode(ch, 0, null, null);
         }
         // if it's a parent node, recursively read child nodes
         return new TrieNode('#', 0, readTrie(), readTrie());
     }
 
-    private static void printHelpMessage() {
-        System.out.println("Read from stdin and output to stdout: java Huffman [compress|decompress] < inputfile");
-        System.out.println("Read from file and output to stdout: java Huffman [compress|decompress] [inputfile]");
-        System.out.println("Read from input file and output to output file: java Huffman [compress|decompress] " +
-                "[inputfile] [outputfile]");
+    private BinaryOut getOutput() {
+        return out;
+    }
+
+    private void setInput(BinaryIn in) {
+        this.in = in;
+    }
+
+    private void setOutput(BinaryOut out) {
+        this.out = out;
+    }
+
+    private boolean isStandardInput() {
+        return in == null;
+    }
+
+    private boolean isStandardOutput() {
+        return out == null;
     }
 
     // non character nodes have a placeholder value '#'
