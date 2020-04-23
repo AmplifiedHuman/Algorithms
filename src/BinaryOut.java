@@ -1,4 +1,4 @@
-package dependencies; /******************************************************************************
+/******************************************************************************
  *  Compilation:  javac BinaryOut.java
  *  Execution:    java BinaryOut
  *  Dependencies: none

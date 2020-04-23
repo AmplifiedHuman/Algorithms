@@ -35,7 +35,7 @@
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-package dependencies;
+
 public class RunLength {
     private static final int R    = 256;
     private static final int LG_R = 8;

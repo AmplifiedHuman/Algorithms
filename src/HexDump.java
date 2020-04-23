@@ -33,7 +33,7 @@
  *  see <a href="https://algs4.cs.princeton.edu/55compression">Section 5.5</a> of
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *  <p>
- *  See also {@link BinaryDump} and {@link PictureDump}.
+ *  See also {@link BinaryDump}.
  *  For more full-featured versions, see the Unix utilities
  *  {@code od} (octal dump) and {@code hexdump} (hexadecimal dump).
  *  <p>
@@ -41,7 +41,7 @@
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-package dependencies;
+
 public class HexDump {
 
     // Do not instantiate.

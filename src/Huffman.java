@@ -1,6 +1,3 @@
-import dependencies.BinaryStdIn;
-import dependencies.BinaryStdOut;
-
 import java.util.PriorityQueue;
 
 public class Huffman {
@@ -9,6 +6,22 @@ public class Huffman {
     private static final int CHAR_SET_SIZE = 256;
 
     public static void main(String[] args) {
+        // check input arguments
+        if (args.length < 1 || args.length > 3) {
+            printHelpMessage();
+            System.exit(-1);
+        }
+        // first option
+        if (args.length == 1) {
+            String option = args[0];
+            if (option.equalsIgnoreCase("compress")) {
+                compress();
+            } else if (option.equalsIgnoreCase("decompress")) {
+                decompress();
+            } else {
+                printHelpMessage();
+            }
+        }
     }
 
     public static void compress() {
@@ -20,10 +33,12 @@ public class Huffman {
             count[ch] += 1;
         }
         TrieNode rootNode = constructTrie(count);
+        // encoding array to store the encoding of each character
         String[] encodingArray = new String[CHAR_SET_SIZE];
         fillEncoding(rootNode, encodingArray, "");
         writeTrie(rootNode);
         // print original message length for easy decoding
+        BinaryStdOut.write(input.length());
         for (char ch : input.toCharArray()) {
             String encodedString = encodingArray[ch];
             // write each character in bit representation
@@ -48,7 +63,7 @@ public class Huffman {
         }
         // left child and right child can't be null since each node has 0 or 2 children
         fillEncoding(root.leftChild, encodingArray, binaryRepresentation + "0");
-        fillEncoding(root.rightChild, encodingArray, binaryRepresentation + "0");
+        fillEncoding(root.rightChild, encodingArray, binaryRepresentation + "1");
     }
 
     // uses preorder DFS to write trie to output
@@ -58,6 +73,7 @@ public class Huffman {
             BinaryStdOut.write(root.ch, 8);
             return;
         }
+        BinaryStdOut.write(false);
         writeTrie(root.leftChild);
         writeTrie(root.rightChild);
     }
@@ -91,9 +107,9 @@ public class Huffman {
         // decode using the trie
         for (int i = 0; i < uncompressedLength; i++) {
             TrieNode tempNode = rootNode;
+            // characters nodes can't be a prefix of another character node
             while (!tempNode.isCharacterNode()) {
-                boolean next = BinaryStdIn.readBoolean();
-                if (next) {
+                if (BinaryStdIn.readBoolean()) {
                     tempNode = tempNode.rightChild;
                 } else {
                     tempNode = tempNode.leftChild;
@@ -112,6 +128,13 @@ public class Huffman {
         }
         // if it's a parent node, recursively read child nodes
         return new TrieNode('#', 0, readTrie(), readTrie());
+    }
+
+    private static void printHelpMessage() {
+        System.out.println("Read from stdin and output to stdout: java Huffman [compress|decompress] < inputfile");
+        System.out.println("Read from file and output to stdout: java Huffman [compress|decompress] [inputfile]");
+        System.out.println("Read from input file and output to output file: java Huffman [compress|decompress] " +
+                "[inputfile] [outputfile]");
     }
 
     // non character nodes have a placeholder value '#'

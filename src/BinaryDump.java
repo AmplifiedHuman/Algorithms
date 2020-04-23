@@ -32,12 +32,12 @@
  *  see <a href="https://algs4.cs.princeton.edu/55compression">Section 5.5</a> of
  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *  <p>
- *  See also {@link HexDump} and {@link PictureDump}.
+ *  See also {@link HexDump}
  *
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-package dependencies;
+
 public class BinaryDump {
 
     // Do not instantiate.
