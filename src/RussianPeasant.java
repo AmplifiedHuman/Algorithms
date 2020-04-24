@@ -25,7 +25,7 @@ public class RussianPeasant {
     }
 
     // Interactive demo of the algorithm
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         // prompts user for number and output result
         Scanner reader = new Scanner(System.in);
         System.out.print("Enter first number: ");
@@ -36,9 +36,9 @@ public class RussianPeasant {
         System.out.println("Result: " + russianMultiply(x, y));
         long elapsedTime = System.nanoTime() - startTime;
         System.out.println("Time taken: " + elapsedTime + "ns");
-        // runs analysis and saves it as a text file
-        System.out.println("Running Analysis...");
-        measureAndRecordPerformance(1000, Integer.MAX_VALUE, 1.05);
+//         runs analysis and saves it as a text file
+//        System.out.println("Running Analysis...");
+//        measureAndRecordPerformance(1000, Integer.MAX_VALUE, 1.05);
     }
 
     // Automatically time the algorithm with increasing inputs and stores the output
