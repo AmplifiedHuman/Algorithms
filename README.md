@@ -7,7 +7,7 @@ Algorithm | Description
 Russian Peasant Multiplication Algorithm | In the Russian peasant method, the powers of two in the decomposition of the multiplicand are found by writing it on the left and progressively halving the left column, discarding any remainder, until the value is 1 (or −1, in which case the eventual sum is negated), while doubling the right column as before. Lines with even numbers on the left column are struck out, and the remaining numbers on the right are added together. - [Wikipedia](https://en.wikipedia.org/wiki/Ancient_Egyptian_multiplication)
 3Sum A & B | In computational complexity theory, the 3SUM problem asks if a given set of n real numbers contains three elements that sum to zero. - [Wikipedia](https://en.wikipedia.org/wiki/3SUM)
 Nth Fibonacci Number | In mathematics, the Fibonacci numbers, commonly denoted F<sub>n</sub>, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. This section contains different approaches including the iterative approach, recursive approach and also the memoization approach. - [Wikipedia](https://en.wikipedia.org/wiki/Fibonacci)
-
+Tower of Hanoi | The Tower of Hanoi is a mathematical game or puzzle. It consists of three rods and a number of disks of different sizes, which can slide onto any rod. The puzzle starts with the disks in a neat stack in ascending order of size on one rod, the smallest at the top, thus making a conical shape. The objective of the puzzle is to move the entire stack to another rod - [Wikipedia](https://en.wikipedia.org/wiki/Tower_of_Hanoi)
 
 ## Analysis
 
@@ -149,4 +149,26 @@ From the graph, we can see that for the memoization approach the graph fits disp
 
 If we compare all the approaches, we can see that there's a massive difference in terms of performance. The iterative and the memoization approach performed much better than the recursive approach since we are comparing two O(n) algorithms against O(2<sup>n</sup>), as the latter has a higher degree, it will perform much worse than its counterparts.
 
+### Tower of Hanoi Algorithm
+This problem can be elegantly solved using recursion. 
+The algorithm consists of the following steps:  
+1. Move n - 1 disks to the mid tower
+2. Move the last disk to the destination
+3. Move the n - 1 from the mid tower to the destination
+There are a total of 2 recursive calls with (n - 1) disks as the input, so similar to the Fibonacci recursive algorithm, we can see that the tree height is n and we are making twice the number of calls of the previous level. Hence the runtime is exponential (O(2<sup>n</sup>)). The space complexity will be O(n) because the deepest level is the nth level. The first call is completed before the second call hence the maximum stack space the algorithm can occupy is n frames. The best case is O(1) when the input is 1.
+  
+#### Runtime
+Attribute | Performance
+--|--
+Overall Runtime | O(2<sup>n</sup>)
+Worst Case | O(2<sup>n</sup>)
+Best Case | O(1)
+Space Complexity | O(n)
 
+#### Performance
+
+![TowerOfHanoiGraph](/src/graphs/Tower_of_Hanoi.png)
+
+[Graph Link](https://docs.google.com/spreadsheets/d/1pINJeaU_bLvGYepocz3DMri5iCqDiT0IfOk2azq-Whs/edit?usp=sharing "Graph Link")
+
+From the graph, we can see that the graph fits almost perfectly with an exponential function, so the runtime (order of growth) of the algorithm is O(2<sup>n</sup>n).
