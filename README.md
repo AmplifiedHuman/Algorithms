@@ -171,4 +171,4 @@ Space Complexity | O(n)
 
 [Graph Link](https://docs.google.com/spreadsheets/d/1pINJeaU_bLvGYepocz3DMri5iCqDiT0IfOk2azq-Whs/edit?usp=sharing "Graph Link")
 
-From the graph, we can see that the graph fits almost perfectly with an exponential function, so the runtime (order of growth) of the algorithm is O(2<sup>n</sup>n).
+From the graph, we can see that the graph fits almost perfectly with an exponential function, so the runtime (order of growth) of the algorithm is O(2<sup>n</sup>).
