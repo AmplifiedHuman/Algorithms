@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -13,10 +15,22 @@ public class Sorter {
                 printHelpMessage();
                 System.out.print("Selection: ");
                 choice = reader.nextLine();
-            } while (!choice.matches("[0-7xX]"));
+            } while (!choice.matches("[0-7xXTt]"));
             // terminates if x encountered
             if (choice.equalsIgnoreCase("x")) {
                 break;
+            }
+            if (choice.equalsIgnoreCase("t")) {
+                System.out.print("Enter starting number: ");
+                int start = Integer.parseInt(reader.nextLine());
+                System.out.print("Enter ending number: ");
+                int end = Integer.parseInt(reader.nextLine());
+                System.out.print("Enter growth factor: ");
+                double factor = Double.parseDouble(reader.nextLine());
+                System.out.println("Running Test Suite...");
+                generateTestOutput(start, end, factor);
+                System.out.println("Test completed.");
+                continue;
             }
             int choiceNum = Integer.parseInt(choice);
             // get array length
@@ -386,7 +400,87 @@ public class Sorter {
         System.out.println("[5] Merge Sort");
         System.out.println("[6] Quick Sort");
         System.out.println("[7] Enhanced Quick Sort");
+        System.out.println("[T] Start Test");
         System.out.println("[X] Quit");
+    }
+
+    private static void generateTestOutput(int start, int end, double factor) {
+        try (
+                FileWriter bubbleWriter = new FileWriter("src/output_files/bubble_sort.txt");
+                FileWriter selectionWriter = new FileWriter("src/output_files/selection_sort.txt");
+                FileWriter insertionWriter = new FileWriter("src/output_files/insertion_sort.txt");
+                FileWriter shellWriter = new FileWriter("src/output_files/shell_sort.txt");
+                FileWriter bogoWriter = new FileWriter("src/output_files/bogo_sort.txt");
+                FileWriter mergeWriter = new FileWriter("src/output_files/merge_sort.txt");
+                FileWriter quickWriter = new FileWriter("src/output_files/quick_sort.txt");
+                FileWriter enhancedQuickWriter = new FileWriter("src/output_files/enhanced_quick_sort.txt")
+        ) {
+
+            int[] input;
+            long startTime;
+            long elapsedTime;
+
+            while (start < end) {
+                // guard for bogoSort to prevent long execution times
+                if (start < 10) {
+                    input = generateInput(start);
+                    startTime = System.nanoTime();
+                    bogoSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    bogoWriter.write(String.format("%d %d\n", start, elapsedTime));
+                }
+                // guard for n ** 2 algorithms and shell sort to prevent long execution times
+                if (start < 30000) {
+                    // bubble sort
+                    input = generateInput(start);
+                    startTime = System.nanoTime();
+                    bubbleSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    bubbleWriter.append(String.format("%d %d\n", start, elapsedTime));
+                    // insertion sort
+                    input = generateInput(start);
+                    startTime = System.nanoTime();
+                    insertionSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    insertionWriter.append(String.format("%d %d\n", start, elapsedTime));
+                    // selection sort
+                    input = generateInput(start);
+                    startTime = System.nanoTime();
+                    selectionSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    selectionWriter.append(String.format("%d %d\n", start, elapsedTime));
+                    // shell sort
+                    input = generateInput(start);
+                    startTime = System.nanoTime();
+                    shellSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    shellWriter.append(String.format("%d %d\n", start, elapsedTime));
+                }
+                // fast sorts
+                // merge sort
+                input = generateInput(start);
+                startTime = System.nanoTime();
+                mergeSort(input);
+                elapsedTime = System.nanoTime() - startTime;
+                mergeWriter.append(String.format("%d %d\n", start, elapsedTime));
+                // quick sort
+                input = generateInput(start);
+                startTime = System.nanoTime();
+                quickSort(input);
+                elapsedTime = System.nanoTime() - startTime;
+                quickWriter.append(String.format("%d %d\n", start, elapsedTime));
+                // enhanced quick sort
+                input = generateInput(start);
+                startTime = System.nanoTime();
+                enhancedQuickSort(input);
+                elapsedTime = System.nanoTime() - startTime;
+                enhancedQuickWriter.append(String.format("%d %d\n", start, elapsedTime));
+                start = (int) Math.ceil(start * factor);
+                System.out.println(start);
+            }
+        } catch (IOException e) {
+            System.out.println("File write error");
+        }
     }
 }
 
