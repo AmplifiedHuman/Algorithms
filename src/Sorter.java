@@ -201,7 +201,7 @@ public class Sorter {
         int mid = input.length / 2;
         // Create sub arrays
         int[] firstHalf = new int[mid];
-        int[] secondHalf = new int[input.length - mid];
+        int[] secondHalf = new int[input.length - firstHalf.length];
         // Initialise values
         System.arraycopy(input, 0, firstHalf, 0, firstHalf.length);
         System.arraycopy(input, mid, secondHalf, 0, secondHalf.length);
@@ -232,11 +232,11 @@ public class Sorter {
         }
         // If we haven't process all of the elements in firstHalf, copy the rest into input
         if (i < firstHalf.length) {
-            System.arraycopy(input, k, firstHalf, i, firstHalf.length - i);
+            System.arraycopy(firstHalf, i, input, k, firstHalf.length - i);
         }
         // If we haven't process all of the elements in secondHalf, copy the rest into input
         if (j < secondHalf.length) {
-            System.arraycopy(input, k, secondHalf, j, firstHalf.length - j);
+            System.arraycopy(secondHalf, j, input, k, secondHalf.length - j);
         }
     }
 
