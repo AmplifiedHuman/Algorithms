@@ -1,67 +1,96 @@
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Sorter {
     public static void main(String[] args) {
-        // size of input
-        int n = 600;
-        int[] input = generateInput(n);
-        // calculate elapse time for bubble sort
-        long startTime = System.nanoTime();
-        bubbleSort(input);
-        long endTime = System.nanoTime();
-        System.out.println("Bubble Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Bubble Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for selection sort
-        input = generateInput(n);
-        startTime = System.nanoTime();
-        selectionSort(input);
-        endTime = System.nanoTime();
-        System.out.println("Selection Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Selection Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for insertion sort
-        input = generateInput(n);
-        startTime = System.nanoTime();
-        insertionSort(input);
-        endTime = System.nanoTime();
-        System.out.println("Insertion Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Insertion Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for shell sort (Knuth sequence)
-        input = generateInput(n);
-        startTime = System.nanoTime();
-        shellSort(input);
-        endTime = System.nanoTime();
-        System.out.println("Shell Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Shell Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for merge sort
-        input = generateInput(n);
-        startTime = System.nanoTime();
-        mergeSort(input);
-        endTime = System.nanoTime();
-        System.out.println("Merge Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Merge Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for quick sort
-        input = generateInput(n);
-        startTime = System.nanoTime();
-        quickSort(input);
-        endTime = System.nanoTime();
-        System.out.println("Quick Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Quick Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-        // calculate elapse time for enhanced quick sort
-        input = generateInput(n);
-        startTime = System.nanoTime();
-        enhancedQuickSort(input);
-        endTime = System.nanoTime();
-        System.out.println("Enhanced Quick Sorted Array: " + Arrays.toString(input));
-        System.out.printf("Time elapsed for Enhanced Quick Sort (%d elements): %fs\n\n", n, (endTime - startTime) / 1e9);
-
-//        calculate elapse time for bogo sort
-//        input = generateInput(n);
-//        startTime = System.nanoTime();
-//        bogoSort(input);
-//        endTime = System.nanoTime();
-//        System.out.println("Bogo Sorted Array: " + Arrays.toString(input));
-//        System.out.printf("Time elapsed for Bogo Sort (%d elements): %fs\n", n, (endTime - startTime) / 1e9);
+        // Interactive Sorting Demo
+        Scanner reader = new Scanner(System.in);
+        // get choice
+        while (true) {
+            String choice;
+            do {
+                printHelpMessage();
+                System.out.print("Selection: ");
+                choice = reader.nextLine();
+            } while (!choice.matches("[0-7xX]"));
+            // terminates if x encountered
+            if (choice.equalsIgnoreCase("x")) {
+                break;
+            }
+            int choiceNum = Integer.parseInt(choice);
+            // get array length
+            String length;
+            do {
+                System.out.print("Enter array length: ");
+                length = reader.nextLine();
+            } while (!length.matches("^[0-9]+$"));
+            System.out.println();
+            int inputLength = Integer.parseInt(length);
+            // generate input
+            int[] input = generateInput(inputLength);
+            // store original array string
+            String original = "Original Array: " + Arrays.toString(input);
+            // choose sort
+            long startTime;
+            long elapsedTime = 0;
+            switch (choiceNum) {
+                case 0:
+                    System.out.println("Bubble Sort: ");
+                    startTime = System.nanoTime();
+                    bubbleSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 1:
+                    System.out.println("Selection Sort: ");
+                    startTime = System.nanoTime();
+                    selectionSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 2:
+                    System.out.println("Insertion Sort: ");
+                    startTime = System.nanoTime();
+                    insertionSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 3:
+                    System.out.println("Shell Sort: ");
+                    startTime = System.nanoTime();
+                    shellSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 4:
+                    System.out.println("Bogo Sort: ");
+                    startTime = System.nanoTime();
+                    bogoSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 5:
+                    System.out.println("Merge Sort: ");
+                    startTime = System.nanoTime();
+                    mergeSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 6:
+                    System.out.println("Quick Sort: ");
+                    startTime = System.nanoTime();
+                    quickSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                case 7:
+                    System.out.println("Enhanced Quick Sort: ");
+                    startTime = System.nanoTime();
+                    enhancedQuickSort(input);
+                    elapsedTime = System.nanoTime() - startTime;
+                    break;
+                default:
+                    System.out.println("Invalid operation.");
+            }
+            System.out.println("Time elapsed: " + elapsedTime + "ns");
+            System.out.println(original);
+            System.out.println("Sorted Array: " + Arrays.toString(input));
+            System.out.println();
+        }
     }
 
     // Worst case: O(n ^ 2)
@@ -345,6 +374,19 @@ public class Sorter {
             }
         }
         return true;
+    }
+
+    private static void printHelpMessage() {
+        System.out.println("Please select a sort (0-7): ");
+        System.out.println("[0] Bubble Sort");
+        System.out.println("[1] Selection Sort");
+        System.out.println("[2] Insertion Sort");
+        System.out.println("[3] Shell Sort");
+        System.out.println("[4] Bogo Sort");
+        System.out.println("[5] Merge Sort");
+        System.out.println("[6] Quick Sort");
+        System.out.println("[7] Enhanced Quick Sort");
+        System.out.println("[X] Quit");
     }
 }
 
