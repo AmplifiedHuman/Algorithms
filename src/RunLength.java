@@ -24,24 +24,25 @@
 
 
 /**
- *  The {@code RunLength} class provides static methods for compressing
- *  and expanding a binary input using run-length coding with 8-bit
- *  run lengths.
- *  <p>
- *  For additional documentation,
- *  see <a href="https://algs4.cs.princeton.edu/55compression">Section 5.5</a> of
- *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ * The {@code RunLength} class provides static methods for compressing
+ * and expanding a binary input using run-length coding with 8-bit
+ * run lengths.
+ * <p>
+ * For additional documentation,
+ * see <a href="https://algs4.cs.princeton.edu/55compression">Section 5.5</a> of
+ * <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
  *
- *  @author Robert Sedgewick
- *  @author Kevin Wayne
+ * @author Robert Sedgewick
+ * @author Kevin Wayne
  */
 
 public class RunLength {
-    private static final int R    = 256;
+    private static final int R = 256;
     private static final int LG_R = 8;
 
     // Do not instantiate.
-    private RunLength() { }
+    private RunLength() {
+    }
 
     /**
      * Reads a sequence of bits from standard input (that are encoded
@@ -73,9 +74,8 @@ public class RunLength {
                 BinaryStdOut.write(run, LG_R);
                 run = 1;
                 old = !old;
-            }
-            else {
-                if (run == R-1) {
+            } else {
+                if (run == R - 1) {
                     BinaryStdOut.write(run, LG_R);
                     run = 0;
                     BinaryStdOut.write(run, LG_R);
@@ -94,8 +94,8 @@ public class RunLength {
      *
      * @param args the command-line arguments
      */
-    public static void  main(String[] args) {
-        if      (args[0].equals("-")) compress();
+    public static void main(String[] args) {
+        if (args[0].equals("-")) compress();
         else if (args[0].equals("+")) expand();
         else throw new IllegalArgumentException("Illegal command line argument");
     }
