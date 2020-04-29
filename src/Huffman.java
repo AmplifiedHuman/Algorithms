@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.PriorityQueue;
 
 public class Huffman {
@@ -18,6 +21,11 @@ public class Huffman {
             printHelpMessage();
             System.exit(-1);
         }
+        // benchmark
+        if (args.length == 1 && args[0].equalsIgnoreCase("benchmark")) {
+            generateCompressionAnalysis();
+            System.exit(0);
+        }
         Huffman huffman = new Huffman();
         if (args.length == 3) {
             huffman.setInput(new BinaryIn(args[1]));
@@ -35,6 +43,52 @@ public class Huffman {
 
         if (!huffman.isStandardOutput()) {
             huffman.getOutput().close();
+        }
+    }
+
+    public static void generateCompressionAnalysis() {
+        try (FileWriter compressionResult = new FileWriter(new File("./output_files/compression.txt"))) {
+            String[] files = {"medTale.txt", "mobydick.txt", "q32x48.bin", "genomeVirus.txt", "bee.txt"};
+            for (String file : files) {
+                // records compression information
+                System.out.println(file);
+                String originalReadPath = String.format("./input_files/%s", file);
+                long originalCount = countBits(new BinaryIn(originalReadPath));
+                String[] fileDetails = file.split("\\.");
+                String compressedWritePath = String.format("./compressed_files/%s_compressed.%s", fileDetails[0],
+                        fileDetails[1]);
+                // compresses file
+                Huffman huffman = new Huffman();
+                huffman.setInput(new BinaryIn(originalReadPath));
+                huffman.setOutput(new BinaryOut(compressedWritePath));
+                long startTime = System.nanoTime();
+                huffman.compress();
+                long compressedTime = System.nanoTime() - startTime;
+                if (!huffman.isStandardOutput()) {
+                    huffman.getOutput().close();
+                }
+                // records decompression information
+                long compressedCount = countBits(new BinaryIn(compressedWritePath));
+                String decompressedWritePath = String.format("./compressed_files/%s_decompressed.%s", fileDetails[0],
+                        fileDetails[1]);
+                // decompresses file
+                huffman = new Huffman();
+                huffman.setInput(new BinaryIn(compressedWritePath));
+                huffman.setOutput(new BinaryOut(decompressedWritePath));
+                startTime = System.nanoTime();
+                huffman.decompress();
+                long decompressedTime = System.nanoTime() - startTime;
+                if (!huffman.isStandardOutput()) {
+                    huffman.getOutput().close();
+                }
+                long decompressedCount = countBits(new BinaryIn(decompressedWritePath));
+                // output results to result file
+                compressionResult.write(String.format("%s %d %d %f %d %d %d\n", file, originalCount, compressedCount,
+                        compressedCount * 1.0 / originalCount, compressedTime, decompressedTime, decompressedCount));
+            }
+        } catch (IOException ex) {
+            System.out.println("IO error occurred");
+            ex.printStackTrace();
         }
     }
 
@@ -74,6 +128,16 @@ public class Huffman {
         System.out.println("Read from stdin and output to stdout: java Huffman [compress|decompress] < inputfile");
         System.out.println("Read from input file and output to output file: java Huffman [compress|decompress] " +
                 "[inputfile] [outputfile]");
+        System.out.println("Run benchmark for provided input files: java Huffman benchmark");
+    }
+
+    // method to calculate bits in a BinaryIn Stream
+    private static long countBits(BinaryIn stream) {
+        long count;
+        for (count = 0; !stream.isEmpty(); count++) {
+            stream.readBoolean();
+        }
+        return count;
     }
 
     public void compress() {
@@ -186,12 +250,12 @@ public class Huffman {
         return out;
     }
 
-    private void setInput(BinaryIn in) {
-        this.in = in;
-    }
-
     private void setOutput(BinaryOut out) {
         this.out = out;
+    }
+
+    private void setInput(BinaryIn in) {
+        this.in = in;
     }
 
     private boolean isStandardInput() {
