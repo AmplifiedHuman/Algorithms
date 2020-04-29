@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 
 public class BruteForceSearch {
@@ -43,12 +42,12 @@ public class BruteForceSearch {
             System.out.println("Text file not found");
             ex.printStackTrace();
         }
-         runBenchMark();
+//         runBenchMark();
     }
 
     private static void runBenchMark() {
         String[] files = new String[]{"src/input_files/random.txt", "src/input_files/100_words.txt",
-                "src/input_files/1000_words.txt", "src/input_files/10000_words.txt", "src/input_files/mobydick.txt"};
+                "src/input_files/1000_words.txt", "src/input_files/10000_words.txt"};
         try (FileWriter writer = new FileWriter("src/output_files/brute_force.txt")) {
             for (String file : files) {
                 Scanner in = new Scanner(new File(file));
@@ -58,10 +57,9 @@ public class BruteForceSearch {
                 }
                 // run search for patterns of length 5 - 20, get average execution time
                 long totalTime = 0;
-                for (int i = 5; i <= 20; i++) {
-                    String generatedString = generateString(i);
+                for (int i = 5; i <= sb.length(); i *= 1.5) {
                     long startTime = System.nanoTime();
-                    search(sb.toString(), generatedString);
+                    search(sb.toString(), "aaabc");
                     long elapsedTime = System.nanoTime() - startTime;
                     totalTime += elapsedTime;
                 }
@@ -71,14 +69,5 @@ public class BruteForceSearch {
             System.out.println("IO error occurred.");
             ex.printStackTrace();
         }
-    }
-
-    // return random generated lowercase string of length n
-    private static String generateString(int length) {
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        char randomChar = (char) ('a' + random.nextInt(25));
-        sb.append(String.valueOf(randomChar).repeat(Math.max(0, length)));
-        return sb.toString();
     }
 }

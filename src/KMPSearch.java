@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
 
 public class KMPSearch {
@@ -34,26 +33,17 @@ public class KMPSearch {
         // length of the previous longest prefix suffix
         int len = 0;
         int i = 1;
-        prefixArray[0] = 0; // lps[0] is always 0
+        prefixArray[0] = 0;
 
-        // the loop calculates lps[i] for i = 1 to M-1
         while (i < pat.length()) {
             if (pat.charAt(i) == pat.charAt(len)) {
                 len++;
                 prefixArray[i] = len;
                 i++;
-            } else // (pat[i] != pat[len])
-            {
-                // This is tricky. Consider the example.
-                // AAACAAAA and i = 7. The idea is similar
-                // to search step.
+            } else {
                 if (len != 0) {
                     len = prefixArray[len - 1];
-
-                    // Also, note that we do not increment
-                    // i here
-                } else // if (len == 0)
-                {
+                } else {
                     prefixArray[i] = len;
                     i++;
                 }
@@ -63,30 +53,30 @@ public class KMPSearch {
     }
 
     public static void main(String[] args) {
-//        try (Scanner in = new Scanner(new File("src/input_files/mobydick.txt"))) {
-//            StringBuilder sb = new StringBuilder();
-//            while (in.hasNextLine()) {
-//                sb.append(in.nextLine());
-//            }
-//            Scanner input = new Scanner(System.in);
-//            System.out.print("Please enter a phrase to search in Moby Dick: ");
-//            int result = search(sb.toString(), input.nextLine());
-//            if (result == -1) {
-//                System.out.println("Phrase not found.");
-//            } else {
-//                System.out.println("Phrase found at index: " + result);
-//            }
-//        } catch (IOException ex) {
-//            System.out.println("Text file not found");
-//            ex.printStackTrace();
-//        }
+        try (Scanner in = new Scanner(new File("src/input_files/mobydick.txt"))) {
+            StringBuilder sb = new StringBuilder();
+            while (in.hasNextLine()) {
+                sb.append(in.nextLine());
+            }
+            Scanner input = new Scanner(System.in);
+            System.out.print("Please enter a phrase to search in Moby Dick: ");
+            int result = search(sb.toString(), input.nextLine());
+            if (result == -1) {
+                System.out.println("Phrase not found.");
+            } else {
+                System.out.println("Phrase found at index: " + result);
+            }
+        } catch (IOException ex) {
+            System.out.println("Text file not found");
+            ex.printStackTrace();
+        }
 
-        runBenchMark();
+        // runBenchMark();
     }
 
     private static void runBenchMark() {
         String[] files = new String[]{"src/input_files/random.txt", "src/input_files/100_words.txt",
-                "src/input_files/1000_words.txt", "src/input_files/10000_words.txt", "src/input_files/mobydick.txt"};
+                "src/input_files/1000_words.txt", "src/input_files/10000_words.txt"};
         try (FileWriter writer = new FileWriter("src/output_files/kmp.txt")) {
             for (String file : files) {
                 Scanner in = new Scanner(new File(file));
@@ -94,12 +84,11 @@ public class KMPSearch {
                 while (in.hasNextLine()) {
                     sb.append(in.nextLine());
                 }
-                // run search for patterns of length 5 - 20, get total time
                 long totalTime = 0;
-                for (int i = 5; i <= 20; i++) {
-                    String generatedString = generateString(i);
+                // run search for patterns of length 5 - text-length, get total time
+                for (int i = 5; i <= sb.length(); i *= 1.5) {
                     long startTime = System.nanoTime();
-                    search(sb.toString(), generatedString);
+                    search(sb.toString(), "aaabc");
                     long elapsedTime = System.nanoTime() - startTime;
                     totalTime += elapsedTime;
                 }
@@ -109,14 +98,5 @@ public class KMPSearch {
             System.out.println("IO error occurred.");
             ex.printStackTrace();
         }
-    }
-
-    // return random generated lowercase string of length n
-    private static String generateString(int length) {
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        char randomChar = (char) ('a' + random.nextInt(25));
-        sb.append(String.valueOf(randomChar).repeat(Math.max(0, length)));
-        return sb.toString();
     }
 }
