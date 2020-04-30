@@ -384,7 +384,7 @@ If we compare all the sorting algorithms above, we can see that the linearithmic
 
 ### Brute Force Substring Search
 The brute-force algorithm works by starting at the beginning of the string and compare each character of your pattern against the subsequent characters in the string.
-Once the algorithm finishes checking the first pattern then increment the pointer to the next character in the string and start the process again. This implementation is designed to stop on the first occurence of the pattern.
+Once the algorithm finishes checking the first pattern then increment the pointer to the next character in the string and start the process again. This implementation is designed to stop on the first occurrence of the pattern.
 
 The Brute Force algorithm has the worst case of O(NW) where N is the length of the input text and W is the length of the search pattern. The best case is O(N + W) when there is no backup during the search.
 
@@ -440,7 +440,7 @@ We can see the KMP algorithm performs better than the Brute Force algorithm by a
 KMP will only be a superior choice if we are searching for large strings and the LPS table is reusable for every search, as we would need to amortise away the huge cost of building the table by doing lots of searches using that table.
 
 ### Run Length Encoding
-In RLE, the characters in the input string must first be looped over. An int counter is used to count the number of times the same character has been shown in a row. When a different character occurs, the counter value and the previous character is outputed. We continue till the end of the list. A small optimisation is added by not outputing the 1 counts.
+In RLE, the characters in the input string must first be looped over. An int counter is used to count the number of times the same character has been shown in a row. When a different character occurs, the counter value and the previous character is outputted. We continue till the end of the list. A small optimisation is added by not outputting the 1 counts.
 
 #### Runtime
 Attribute | Performance
@@ -461,7 +461,7 @@ q64x96.bin | Bitmap	| 6144 | 2296 | 0.37
 
 It is apparent that Run Length Encoding performs poorly on ASCII text as the resulting file ended up being larger than the original file by nearly 4 times (Compression Ratio > 1). 
 
-In the provided implementation of RunLength.java, 8 bits are used to store the counts. It alternates between 1 and 0 for each entry and the count is fixed to 8 bits so it pads smaller counts with 0 values. So for ASCII text, as there are not a lot of runs of 0 and 1, we ended up wasting a lot of bits on short runs.
+In the provided implementation of RunLength.java, 8 bits are used to store the counts. It alternates between 1 and 0 for each entry and the count is fixed to 8 bits so it pads smaller counts with 0 values. So, for ASCII text, as there are not a lot of runs of 0 and 1, we ended up wasting a lot of bits on short runs.
 
 Hence Run Length Encoding is widely used for bitmaps because this input data is more likely to have long runs of repeated data (i.e. pixels).
 
@@ -470,7 +470,7 @@ Hence Run Length Encoding is widely used for bitmaps because this input data is 
 This is the documentation of the final assignment of the module where we build our own utility for compressing and decompressing files.
 
 The construction of a Huffman tree can be illustrated with an example:
-If we are given the phrase **"There is no place like home"**, without double quotes, we can first construct the frequency table by counting each character occurence in the phrase.
+If we are given the phrase **"There is no place like home"**, without double quotes, we can first construct the frequency table by counting each character occurrence in the phrase.
 
 #### Frequency Table
 
@@ -495,7 +495,8 @@ m | 1
 #### Huffman Tree Construction
 
 We can then construct the Huffman Tree by selecting the smallest two nodes and merging them, until there is one root left.
-Note that: if two nodes have equal weight, it doesn't matter which one we choose as the produced code will still adhere to the Huffman Tree Rules.
+
+Note that: When we are picking the two smallest nodes, there might exist multiple nodes with the same weight. The Huffman algorithm does not specify the method for choosing the correct node in these kinds of cases. So, no matter which node we pick as long as **their weight are equal** it will still encode the message with the optimal number of bits among prefix-free codes. 
 
 ![Huffman Tree](/src/graphs/Huffman_Tree.png)
 
@@ -520,18 +521,21 @@ c | 1 | 11111
 k | 1 | 11100
 m | 1 | 11101
 
-Average bits per character can be calculated as follows: ((5 * 2) + (3 * 2 * 4) + (2 * 5) + (9 * 5)) / 27 = 3.3 bits per character, which is better than 4 bits.
+Average bits per character can be calculated as follows: ((5 * 2) + (3 * 2 * 4) + (2 * 5) + (9 * 5)) / 27 = 3.3 bits per character, which is better than 4 bits. We are taking advantage of the fact that each character has different probabilities (occurrences), so we can assign shorter codes to more frequent characters to save space, in contrast to RLE which uses a fix number of bits to represent the count.
 
 #### Get Started
-Run `javac Huffman.java` in the src directory, then use the appropiate arguments for different operation methods:  
+Run `javac Huffman.java` in the src directory, then use the appropriate arguments for different operation methods:  
 
-Read from stdin and output to stdout: 
+Read from stdin and output to stdout:
+
 `java Huffman [compress|decompress] < inputfile`  
 
 Read from input file and output to output file: 
+
 `java Huffman [compress|decompress] [inputfile] [outputfile]`  
 
 Run benchmark for provided input files: 
+
 `java Huffman benchmark`  
 
 #### Runtime
@@ -539,7 +543,7 @@ Building the Huffman Tree would take O(k log k) time where k is the size of the 
 
 In many cases, time complexity is not very important in the choice of algorithm here, since k here is the number of symbols in the alphabet, which is typically a very small number (compared to the length of the message to be encoded); whereas complexity analysis concerns the behavior when k grows to be very large.
 
-For the compressing operation, it would take O(n + k log k) where n is the size of the text and k log k is the time to build the Huffman Tree, note that the k log k part is offen negligible since the char set size is usually small.
+For the compressing operation, it would take O(n + k log k) where n is the size of the text and k log k is the time to build the Huffman Tree, note that the k log k part is often negligible since the char set size is usually small.
 
 Similar to the compressing operation, decompression would also take O(n + k log k) time since we need to reconstruct the Huffman Tree again and decode each individual character in the input.
 
@@ -550,7 +554,7 @@ The compressed files can be found under src/compressed_files/ and has the file n
 
 The input file of my choosing is bee.txt which contains the entire bee movie script.
 
-I have written a method called generateCompressionAnalysis() in Huffman.java which generates the data Huffman.txt, by compressing and decompressing the input files and recording the time taken and also the size difference.
+I have written a method called generateCompressionAnalysis() in Huffman.java which generates the data Huffman.txt, by compressing and decompressing the input files and recording the time taken and also recording the size difference.
 
 If we format the data into tabular form, we would get the following result:
 
@@ -569,6 +573,39 @@ If we plot the compression time and decompression time relative to the input siz
 
 We can see that both the compression and decompression time grows linearly when the input increases which is the expected result since the algorithm is effectively O(n) since the character set is not large.
 
-Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small (genomeVirus.txt) as the file is shrinked to almost 25% of its original size. 
+Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small (genomeVirus.txt) and the file is shrinked to almost 25% of its original size. 
 
-Besides, for normal text files with english text, the compression ratio is normally around 50-60% since the english language contains quite a lot of redundacies.
+Besides, for normal text files with English text, the compression ratio is normally around 50-60% since the English language contains quite a lot of redundancies.
+
+##### So, what happens if we compress a file repeatedly? (is there an end to this?)
+
+To prove that a universal algorithm **does not exist**, which means we will eventually reach a point where the file could no longer be compressed any further (compression ratio >= 1), I wrote the method repeatedCompression() in Huffman.java to prove that my hypothesis is indeed correct.
+
+The chosen file is bee.txt in this instance, but it can be done to any file.
+
+The results are outputted to repeated_compression.txt, and can be summarised as follows:
+Count |	Original Bits	| Compressed Bits	| Compression Ratio
+--|--|--|--
+1	| 401112 | 231976 | 0.578332
+2	| 231976 | 231832	| 0.999379
+3	| 231832 | 234376 | 1.010973
+
+With just 3 iterations, we are no longer able to shrink the file any further, as the compression ratio reaches 1. Also note that with each iteration the compression ratio increases very minimally (diminishing returns).
+
+#### Comparison against RLE
+I have written a modified version of RunLength.java which is named ModifiedRLE.java, to easily generate data for RLE (with identical format as the previous analysis) and can be found at RLE.txt. The RLE compressed files will have the file name (name_RLE_compressed.*) where * is the extension of the respective file and filename is the corresponding input file name.
+
+##### RLE
+File	| Input Size | Compressed Size | Compression Ratio | Compression Time |	Decompression Time | Decompressed Size
+-- | -- | -- | -- | -- | -- | --
+q32x48.bin | 1536 | 1144 | 0.744792 | 157464 | 213198 | 1536
+medTale.txt | 45056 | 182520 | 4.050959 | 5900426 | 5033866 | 45056
+genomeVirus.txt | 50008 | 223632 | 4.471924 | 1785293 | 2347047 | 50008
+bee.txt	| 401112 | 1615848 | 4.028421 | 7766411 | 11706178 | 401112
+mobydick.txt | 9531704 | 38698936 | 4.060023 | 96692046 | 144633228 | 9531704
+
+If we compare the RLE data to the Huffman data, we can see that Huffman has higher compression ratio overall. RLE only works on binary files (Bit Maps) is literally useless for ASCII text compression.
+
+##### Why did the Huffman Algorithm perform better on q32x48.bin even though RLE is optimised for binary files?
+
+The Huffman algorithm can work properly for any 8-bit value in each 8-bit character, and hence can be applied to **any byte stream**. In the case of the binary bit map file, Huffman compression essentially discovers a lot of 00000000 and 11111111 characters, so those runs are encoded with a smaller encoding. In the case of RLE, although it is optimised for long runs the count will still take up 8 bits which contributes to a lot of wasted space.
