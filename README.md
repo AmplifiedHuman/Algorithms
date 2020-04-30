@@ -1,6 +1,11 @@
 # Algorithms Portfolio
 This repository contains documentation and code that I have written for my Algorithms course COMP20290.
 
+## Interactive Demo
+To run the interactive demo, run [Main.java](../master/src/Main.java).
+
+Note that: 3SumA & B, RLE, and Huffman Encoding are not available and can only be run through the terminal.
+
 ## Algorithms List
 Algorithm | Description
 --|--
@@ -23,6 +28,9 @@ Algorithm | Description
 ## Analysis
 
 ### Russian Peasant Multiplication Algorithm
+#### Source Code
+ - [RussianPeasant.java](../master/src/RussianPeasant.java)
+
 How the algorithm works is fairly simple and can be illustrated using an example.  
   
 #### Example: 85 x 18
@@ -59,6 +67,9 @@ Overall, we can see that the runtime of the algorithm grows very slowly relative
 
 ### 3Sum Algorithm
 #### 3SumA
+##### Source Code
+ - [ThreeSumA.java](../master/src/ThreeSumA.java)
+
 For 3SumA it works by using three nested for loops. The performance suffers as the runtime is O(n<sup>3</sup>).  
 
 ##### Runtime of 3SumA  
@@ -76,7 +87,11 @@ From the graph, we can see that for 3SumA the graph fits almost perfectly with a
 consolidates our previous asymptotic analysis result.
 
 #### 3SumB
+##### Source Code
+ - [ThreeSumB.java](../master/src/ThreeSumB.java)
+
 For 3SumB, the array is sorted (O(n log n)) first and there are two for loops and a binary search. The overall runtime is O(n<sup>2</sup> log n).
+
 
 ##### Runtime of 3SumB 
 Attribute | Performance
@@ -100,6 +115,9 @@ From the graph, we can see that for 3SumB the graph also looks like a quadratic 
 If we compare both 3SumA and 3SumB we can see that there's a massive difference in terms of performance. 3SumB performed much better than 3SumA, because O(n<sup>2</sup> log n) behaves like O(n<sup>2</sup>) if the input is large enough. Effectively speaking we are comparing O(n<sup>2</sup>) against O(n<sup>3</sup>), as the latter has a higher degree, it will perform much worse than its counterpart.
 
 ### Nth Fibonacci Number Algorithm
+#### Source Code
+ - [Fibonacci.java](../master/src/Fibonacci.java)
+
 #### Recursive Approach
 The common recursive approach is clean and elegant but it suffers in terms of performance due a lot of redundant and repetitive calculations. The runtime complexity for this approach would be O(2<sup>n</sup>) since we are almost making twice the number of calls of the previous level, and there are n-levels. So, if we solve 1 + 2 + 4 + 8 + ... and there are n terms, we can use the [Geometric Series Sum formula](https://en.wikipedia.org/wiki/Geometric_series#Formula) to get the value 2<sup>n</sup> - 1. Hence, we can conclude that the runtime is exponential (O(2<sup>n</sup>)). 
 
@@ -166,6 +184,9 @@ From the graph, we can see that for the memoization approach the graph fits disp
 If we compare all the approaches, we can see that there's a massive difference in terms of performance. The iterative and the memoization approach performed much better than the recursive approach since we are comparing two O(n) algorithms against O(2<sup>n</sup>), as the latter has a higher degree, it will perform much worse than its counterparts.
 
 ### Tower of Hanoi Algorithm
+#### Source Code
+ - [TowerOfHanoi.java](../master/src/TowerOfHanoi.java)
+
 This problem can be elegantly solved using recursion. 
 The algorithm consists of the following steps:  
 1. Move n - 1 disks to the mid tower
@@ -191,6 +212,9 @@ Space Complexity | O(n)
 From the graph, we can see that the graph fits almost perfectly with an exponential function, so the runtime (order of growth) of the algorithm is O(2<sup>n</sup>).
 
 ### Bubble Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 In each iteration of Bubble Sort, we swap each element pair if the first element is bigger than the second element. At the nth iteration, it's guaranteed that the nth largest element is in their correct place. We can see that there are two for loops where the indices of the second for loop depends on the first for loop, so the runtime complexity is quadratic. 
 
 From a geometrical standpoint, for each outer loop iteration, the inner loop iteration count decreases by 1, so it resembles a triangular shape. We know that the area of the triangle is can be calculated by 1/2 * base * height, as the base and the height are the same, the runtime complexity can be calculated as follows O(n<sup>2</sup>/2) = O(n<sup>2</sup>). 
@@ -215,6 +239,9 @@ Stable | Yes, can be made stable
 From the graph, we can see that the graph fits almost perfectly with a quadratic polynomial, so the runtime (order of growth) of the algorithm is indeed O(n<sup>2</sup>).
 
 ### Selection Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 For each iteration of Selection Sort, we find the i-th smallest element in the array and swaps it with the current i-th element. Similar to Bubble Sort as there are two for loops and the iteration of the inner for loop decreases by one for each iteration of the outer loop, we can simply the sum of n + (n - 1) + (n - 2) + ... 3 + 2 + 1 using the sum from [1 to N formula](https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF) to get n * (n + 1) / 2, so the runtime complexity is O(n<sup>2</sup>).
 
 #### Runtime
@@ -236,6 +263,9 @@ From the graph
 , we can see that the graph fits almost perfectly with a quadratic polynomial, so the runtime (order of growth) of the algorithm is indeed O(n<sup>2</sup>).
 
 ### Insertion Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 At each iteration, insertion sort takes the next i-th element and inserts it to its appropriate place in the sorted section of the array. In the worst case, the element would need to be placed at the start of the array if it's the smallest element we have encountered so far. Hence, we can see that the runtime complexity will be O(n<sup>2</sup>) as for each element the worst case is O(n). 
 
 An interesting observation is the fact that if the provided array is in descending order it will be considered the worst case since each element would need to be moved to the start of the array for each iteration. Insertion sort only takes one iteration to complete if the array is already sorted and performs very well on partially sorted small arrays.
@@ -258,6 +288,9 @@ Stable | Yes, can be made stable
 From the graph, we can see that the graph fits almost perfectly with a quadratic polynomial, so the runtime (order of growth) of the algorithm is indeed O(n<sup>2</sup>).
 
 ### Shell Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 Shell sort is a subtle improvement of insertion sort, instead of moving one position at a time, we make jumps to move the smaller elements to the front of the array faster. The sequence used for this implementation of Shell Sort is the Knuth Sequence where the kth element in the sequence is defined as (3<sup>k</sup>-1)/2 and bounded by N/3 (1, 4, 13, 40, 121, 364, ...). We can obtain linearithmic performance O(n log n) for the best case and O(n<sup>3/2</sup>) for the worst case.
 #### Runtime
 Attribute | Performance
@@ -276,6 +309,9 @@ Stable | No
 From the graph, we can see that the algorithm performs very well and grows almost linearly even when the input is quite large. However, the performance is inconsistent as there are multiple spikes in the graph.
 
 ### Bogo Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 Bogo-sort is equivalent to repeatedly throwing a deck of cards in the air, picking them up at random, and then testing whether they are in order. It performs extremely badly and should not be used at all.
 #### Runtime
 Attribute | Performance
@@ -307,6 +343,9 @@ Insertion Sort performs better than Selection Sort since the best case for Inser
 Shell Sort performs the best among all elementary sorting algorithms as it is more asymptotically efficient than the other algorithms by making jumps (reducing the number of swaps). 
 
 ### Merge Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 Merge Sort uses the divide and conquer approach to partition the array into halves, recursively sorting each half and finally merging both sorted arrays to form the final sorted array. As the merging operation takes O(n) time when merging both halves, and for each level i, the runtime will be O(i * (n / i)) = O(n), so the amount of work remains O(n) for each level. As we are halving the array for each level until the they eventually reach 1, there will be log<sub>2</sub>n levels. So, combining the the work done on each level, and the number of levels, the runtime of the algorithm will be O(n log n). 
 
 The main disadvantage of merge sort is that it takes up O(n) space for auxiliary arrays, so it's not in place. 
@@ -331,6 +370,9 @@ Stable | Yes, depends on the merging operation
 From the graph, we can see that the algorithm performs very well and grows almost linearly even when the input is quite large. So, it is an efficient algorithm and is used in many practical applications.
 
 ### Quick Sort
+#### Source Code
+ - [Sorter.java](../master/src/Sorter.java)
+
 Quick Sort also uses the divide and conquer approach and uses pivot elements to recursively partition the array into two sections and joining them together after sorting each half recursively. So, like merge sort, it will achieve O(n log n) time for the best case.
 
 The main disadvantage of Quick Sort is its performance relies on the pivot selection algorithm. For example, if the pivot element is always the first element and the input is a sorted array, each partition process will only partition one element, and there will be n levels, so by using a similar analysis technique like the Selection Sort we would get the worst case runtime which is O(n<sup>2</sup>).
@@ -383,6 +425,9 @@ When we compare all the efficient sorts listed above, we can see that the enhanc
 If we compare all the sorting algorithms above, we can see that the linearithmic (O(n log n)) algorithms outperform the slower O(n<sup>2</sup>) algorithms by a lot. So, it is clear that asymptotic analysis can save us a lot of time by estimating how the algorithm will scale as the input grows.
 
 ### Brute Force Substring Search
+#### Source Code
+ - [BruteForceSearch.java](../master/src/BruteForceSearch.java)
+
 The brute-force algorithm works by starting at the beginning of the string and compare each character of your pattern against the subsequent characters in the string.
 Once the algorithm finishes checking the first pattern then increment the pointer to the next character in the string and start the process again. This implementation is designed to stop on the first occurrence of the pattern.
 
@@ -404,6 +449,9 @@ Space Complexity | O(1)
 From the graph, we can see that the running time increases proportionally when the input grows larger.
 
 ### KMP Search
+#### Source Code
+ - [KMPSearch.java](../master/src/KMPSearch.java)
+
 KMP improves upon this by taking advantage of prior knowledge about the text being searched. The key idea then behind KMP is that if we already have matched the first x characters of the pattern and then we encounter a mismatch, we don’t necessarily have to move to the very next character in the search text. We might be able to take advantage of our knowledge of the pattern we’re looking for and the characters we’ve already encountered in the search text to jump ahead a little.
 
 KMP has two efficiencies by taking advantage of prior knowledge:
@@ -440,6 +488,9 @@ We can see the KMP algorithm performs better than the Brute Force algorithm by a
 KMP will only be a superior choice if we are searching for large strings and the LPS table is reusable for every search, as we would need to amortise away the huge cost of building the table by doing lots of searches using that table.
 
 ### Run Length Encoding
+#### Source Code
+ - [RLE.java](../master/src/RLE.java)
+
 In RLE, the characters in the input string must first be looped over. An int counter is used to count the number of times the same character has been shown in a row. When a different character occurs, the counter value and the previous character is outputted. We continue till the end of the list. A small optimisation is added by not outputting the 1 counts.
 
 #### Runtime
@@ -453,11 +504,11 @@ Space Complexity | O(1)
 
 Name | Type | Input Size | Compressed Size | Compression Ratio
 --|--|--|--|--
-4runs.bin | Binary | 40	| 32 | 0.8
-abra.txt | Text |	104 |	456 | 4.38
-mobydick.txt | Text	| 9531704	| 38698936 | 4.06
-q32x48.bin | Bitmap | 1536 | 1144 | 0.74
-q64x96.bin | Bitmap	| 6144 | 2296 | 0.37
+[4runs.bin](../master/src/input_files/4runs.bin) | Binary | 40	| 32 | 0.8
+[abra.txt](../master/src/input_files/abra.txt) | Text |	104 |	456 | 4.38
+[mobydick.txt](../master/src/input_files/mobydick.txt) | Text	| 9531704	| 38698936 | 4.06
+[q32x48.bin](../master/src/input_files/q32x48.bin) | Bitmap | 1536 | 1144 | 0.74
+[q64x96.bin](../master/src/input_files/q64x96.bin) | Bitmap	| 6144 | 2296 | 0.37
 
 It is apparent that Run Length Encoding performs poorly on ASCII text as the resulting file ended up being larger than the original file by nearly 4 times (Compression Ratio > 1). 
 
@@ -467,6 +518,9 @@ Hence Run Length Encoding is widely used for bitmaps because this input data is 
 
 
 ### Huffman Encoding
+#### Source Code
+ - [Huffman.java](../master/src/Huffman.java)
+
 This is the documentation of the final assignment of the module where we build our own utility for compressing and decompressing files.
 
 The construction of a Huffman tree can be illustrated with an example:
@@ -550,21 +604,21 @@ Similar to the compressing operation, decompression would also take O(n + k log 
 
 #### Compression Analysis
 Note:
-The compressed files can be found under src/compressed_files/ and has the file name "filename_compressed.*" where * is the extension of the respective file and filename is the corresponding input file name.
+The compressed files can be found under [src/compressed_files/](../master/src/compressed_files/) and has the file name "filename_compressed.*" where * is the extension of the respective file and filename is the corresponding input file name.
 
-The input file of my choosing is bee.txt which contains the entire bee movie script.
+The input file of my choosing is [bee.txt](../master/src/input_files/bee.txt) which contains the entire bee movie script.
 
-I have written a method called generateCompressionAnalysis() in Huffman.java which generates the data Huffman.txt, by compressing and decompressing the input files and recording the time taken and also recording the size difference.
+I have written a method called generateCompressionAnalysis() in [Huffman.java](../master/src/Huffman.java) which generates the data [Huffman.txt](../master/src/compressed_files/Huffman.txt), by compressing and decompressing the input files and recording the time taken and also recording the size difference.
 
 If we format the data into tabular form, we would get the following result:
 
 File	| Input Size | Compressed Size | Compression Ratio | Compression Time |	Decompression Time | Decompressed Size
 -- | -- | -- | -- | -- | -- | --
-q32x48.bin | 1536 | 816 | 0.53125 | 212243 | 40709 | 1536
-medTale.txt	| 45056 |	23912 |	0.530717 | 6846695 | 2174448 | 45056
-genomeVirus.txt | 50008 | 12576 | 0.25148 | 896080 | 270402 | 50008
-bee.txt	| 401112 | 231976 | 0.578332 | 14536900 | 2107232 | 401112
-mobydick.txt | 9531704 | 5341208 | 0.560362 | 113272887 | 46806047 | 9531704
+[q32x48.bin](../master/src/input_files/q32x48.bin) | 1536 | 816 | 0.53125 | 212243 | 40709 | 1536
+[medTale.txt](../master/src/input_files/medTale.txt)	| 45056 |	23912 |	0.530717 | 6846695 | 2174448 | 45056
+[genomeVirus.txt](../master/src/input_files/genomeVirus.txt) | 50008 | 12576 | 0.25148 | 896080 | 270402 | 50008
+[bee.txt](../master/src/input_files/bee.txt)	| 401112 | 231976 | 0.578332 | 14536900 | 2107232 | 401112
+[mobydick.txt](../master/src/input_files/mobydick.txt) | 9531704 | 5341208 | 0.560362 | 113272887 | 46806047 | 9531704
 
 If we plot the compression time and decompression time relative to the input size, we would obtain the following graph:
 ![Huffman Compression Decompression Graph](/src/graphs/Huffman_Compress_Decompress.png)
@@ -573,17 +627,17 @@ If we plot the compression time and decompression time relative to the input siz
 
 We can see that both the compression and decompression time grows linearly when the input increases which is the expected result since the algorithm is effectively O(n) since the character set is not large.
 
-Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small (genomeVirus.txt) and the file is shrinked to almost 25% of its original size. 
+Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small ([genomeVirus.txt](../master/src/input_files/genomeVirus.txt)) and the file is shrinked to almost 25% of its original size. 
 
 Besides, for normal text files with English text, the compression ratio is normally around 50-60% since the English language contains quite a lot of redundancies.
 
 ##### So, what happens if we compress a file repeatedly? (is there an end to this?)
 
-To prove that a universal algorithm **does not exist**, which means we will eventually reach a point where the file could no longer be compressed any further (compression ratio >= 1), I wrote the method repeatedCompression() in Huffman.java to prove that my hypothesis is indeed correct.
+To prove that a universal algorithm **does not exist**, which means we will eventually reach a point where the file could no longer be compressed any further (compression ratio >= 1), I wrote the method repeatedCompression() in [Huffman.java](../master/src/Huffman.java) to prove that my hypothesis is indeed correct.
 
 The chosen file is bee.txt in this instance, but it can be done to any file.
 
-The results are outputted to repeated_compression.txt, and can be summarised as follows:
+The results are outputted to [repeated_compression.txt](../master/src/compressed_files/repeated_compression.txt), and can be summarised as follows:
 Count |	Original Bits	| Compressed Bits	| Compression Ratio
 --|--|--|--
 1	| 401112 | 231976 | 0.578332
@@ -593,19 +647,19 @@ Count |	Original Bits	| Compressed Bits	| Compression Ratio
 With just 3 iterations, we are no longer able to shrink the file any further, as the compression ratio reaches 1. Also note that with each iteration the compression ratio increases very minimally (diminishing returns).
 
 #### Comparison against RLE
-I have written a modified version of RunLength.java which is named ModifiedRLE.java, to easily generate data for RLE (with identical format as the previous analysis) and can be found at RLE.txt. The RLE compressed files will have the file name (name_RLE_compressed.*) where * is the extension of the respective file and filename is the corresponding input file name.
+I have written a modified version of RunLength.java which is named [ModifiedRLE.java](../master/src/ModifiedRLE.java), to easily generate data for RLE (with identical format as the previous analysis) and can be found at [RLE.txt](../master/src/compressed_files/RLE.txt). The RLE compressed files will have the file name (name_RLE_compressed.*) where * is the extension of the respective file and filename is the corresponding input file name.
 
 ##### RLE
 File	| Input Size | Compressed Size | Compression Ratio | Compression Time |	Decompression Time | Decompressed Size
 -- | -- | -- | -- | -- | -- | --
-q32x48.bin | 1536 | 1144 | 0.744792 | 157464 | 213198 | 1536
-medTale.txt | 45056 | 182520 | 4.050959 | 5900426 | 5033866 | 45056
-genomeVirus.txt | 50008 | 223632 | 4.471924 | 1785293 | 2347047 | 50008
-bee.txt	| 401112 | 1615848 | 4.028421 | 7766411 | 11706178 | 401112
-mobydick.txt | 9531704 | 38698936 | 4.060023 | 96692046 | 144633228 | 9531704
+[q32x48.bin](../master/src/input_files/q32x48.bin) | 1536 | 1144 | 0.744792 | 157464 | 213198 | 1536
+[medTale.txt](../master/src/input_files/medTale.txt) | 45056 | 182520 | 4.050959 | 5900426 | 5033866 | 45056
+[genomeVirus.txt](../master/src/input_files/genomeVirus.txt) | 50008 | 223632 | 4.471924 | 1785293 | 2347047 | 50008
+[bee.txt](../master/src/input_files/bee.txt)	| 401112 | 1615848 | 4.028421 | 7766411 | 11706178 | 401112
+[mobydick.txt](../master/src/input_files/mobydick.txt) | 9531704 | 38698936 | 4.060023 | 96692046 | 144633228 | 9531704
 
 If we compare the RLE data to the Huffman data, we can see that Huffman has higher compression ratio overall. RLE only works on binary files (Bit Maps) is literally useless for ASCII text compression.
 
-##### Why did the Huffman Algorithm perform better on q32x48.bin even though RLE is optimised for binary files?
+##### Why did the Huffman Algorithm perform better on [q32x48.bin](../master/src/input_files/q32x48.bin) even though RLE is optimised for binary files?
 
 The Huffman algorithm can work properly for any 8-bit value in each 8-bit character, and hence can be applied to **any byte stream**. In the case of the binary bit map file, Huffman compression essentially discovers a lot of 00000000 and 11111111 characters, so those runs are encoded with a smaller encoding. In the case of RLE, although it is optimised for long runs the count will still take up 8 bits which contributes to a lot of wasted space.
