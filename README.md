@@ -5,20 +5,20 @@ This repository contains documentation and code that I have written for my Algor
 Algorithm | Description
 --|--
 [Russian Peasant Multiplication Algorithm](#russian-peasant-multiplication-algorithm) | In the Russian peasant method, the powers of two in the decomposition of the multiplicand are found by writing it on the left and progressively halving the left column, discarding any remainder, until the value is 1 (or −1, in which case the eventual sum is negated), while doubling the right column as before. Lines with even numbers on the left column are struck out, and the remaining numbers on the right are added together. - [Wikipedia](https://en.wikipedia.org/wiki/Ancient_Egyptian_multiplication)
-3Sum A & B | In computational complexity theory, the 3SUM problem asks if a given set of n real numbers contains three elements that sum to zero. - [Wikipedia](https://en.wikipedia.org/wiki/3SUM)
-Nth Fibonacci Number | In mathematics, the Fibonacci numbers, commonly denoted F<sub>n</sub>, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 to 1. This section contains different approaches including the iterative approach, recursive approach, and the memoization approach. - [Wikipedia](https://en.wikipedia.org/wiki/Fibonacci)
-Tower of Hanoi | The Tower of Hanoi is a mathematical game or puzzle. It consists of three rods, and a number of disks of different sizes, which can slide onto any rod. The puzzle starts with the disks in a neat stack in ascending order of size on one rod, the smallest at the top, thus making a conical shape. The objective of the puzzle is to move the entire stack to another rod - [Wikipedia](https://en.wikipedia.org/wiki/Tower_of_Hanoi)
-Bubble Sort | Bubble Sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. The algorithm, which is a comparison sort, is named for the way smaller or larger elements "bubble" to the top of the list. - [Wikipedia](https://en.wikipedia.org/wiki/Bubble_sort)
-Selection Sort | Selection Sort divides the input list into two parts: a sorted sublist of items which is built up from left to right at the front (left) of the list, and a sublist of the remaining unsorted items that occupy the rest of the list. Initially, the sorted sublist is empty, and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest element in the unsorted sublist, exchanging (swapping) it with the leftmost unsorted element (putting it in sorted order), and moving the sublist boundaries one element to the right. - [Wikipedia](https://en.wikipedia.org/wiki/Selection_sort)
-Insertion Sort | Insertion Sort iterates, consuming one input element each repetition, and growing a sorted output list. At each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain. - [Wikipedia](https://en.wikipedia.org/wiki/Insertion_sort)
-Shell Sort | Shell Sort starts by sorting pairs of elements far apart from each other, then progressively reducing the gap between elements to be compared. Starting with far apart elements, it can move some out-of-place elements into position faster than a simple nearest neighbor exchange. The running time of Shell Sort is heavily dependent on the gap sequence it uses. - [Wikipedia](https://en.wikipedia.org/wiki/Shellsort)
-Bogo Sort | Bogo Sort is a highly inefficient sorting algorithm based on the generate and test paradigm. The function successively generates permutations of its input until it finds one that is sorted. - [Wikipedia](https://en.wikipedia.org/wiki/Bogosort)
-Merge Sort | Merge Sort divides the unsorted list into n sublists, each containing one element (a list of one element is considered sorted). It repeatedly merges sublists to produce new sorted sublists until there is only one sublist remaining to get the final sorted list - [Wikipedia](https://en.wikipedia.org/wiki/Merge_sort)
-Quick Sort | Quicksort is a divide-and-conquer algorithm. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively. This can be done in-place, requiring small additional amounts of memory to perform the sorting. - [Wikipedia](https://en.wikipedia.org/wiki/Quicksort)
-Brute Force Substring Search | The Brute Force algorithm compares the pattern to the text, one character at a time, until unmatching characters are found.
-KMP Search | The Knuth–Morris–Pratt string-searching algorithm (or KMP algorithm) searches for occurrences of a "word" W within a main "text string" S by employing the observation that when a mismatch occurs, the word itself embodies sufficient information to determine where the next match could begin, thus bypassing re-examination of previously matched characters. - [Wikipedia](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm)
-Run Length Encoding | Run-length encoding (RLE) is a form of lossless data compression in which runs of data (sequences in which the same data value occurs in many consecutive data elements) are stored as a single data value and count, rather than as the original run. This is most useful on data that contains many such runs. - [Wikipedia](https://en.wikipedia.org/wiki/Run-length_encoding)
-Huffman Encoding | Huffman coding uses a specific method for choosing the representation for each symbol, resulting in a prefix code (sometimes called "prefix-free codes", that is, the bit string representing some particular symbol is never a prefix of the bit string representing any other symbol). The output from Huffman's algorithm can be viewed as a variable-length code table for encoding a source symbol (such as a character in a file). The algorithm derives this table from the estimated probability or frequency of occurrence (weight) for each possible value of the source symbol. - [Wikipedia](https://en.wikipedia.org/wiki/Huffman_coding)
+[3Sum A & B](#3sum-algorithm) | In computational complexity theory, the 3SUM problem asks if a given set of n real numbers contains three elements that sum to zero. - [Wikipedia](https://en.wikipedia.org/wiki/3SUM)
+[Nth Fibonacci Number](#nth-fibonacci-number-algorithm) | In mathematics, the Fibonacci numbers, commonly denoted F<sub>n</sub>, form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 to 1. This section contains different approaches including the iterative approach, recursive approach, and the memoization approach. - [Wikipedia](https://en.wikipedia.org/wiki/Fibonacci)
+[Tower of Hanoi](#tower-of-hanoi-algorithm) | The Tower of Hanoi is a mathematical game or puzzle. It consists of three rods, and a number of disks of different sizes, which can slide onto any rod. The puzzle starts with the disks in a neat stack in ascending order of size on one rod, the smallest at the top, thus making a conical shape. The objective of the puzzle is to move the entire stack to another rod - [Wikipedia](https://en.wikipedia.org/wiki/Tower_of_Hanoi)
+[Bubble Sort](#bubble-sort) | Bubble Sort, sometimes referred to as sinking sort, is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted. The algorithm, which is a comparison sort, is named for the way smaller or larger elements "bubble" to the top of the list. - [Wikipedia](https://en.wikipedia.org/wiki/Bubble_sort)
+[Selection Sort](#selection-sort) | Selection Sort divides the input list into two parts: a sorted sublist of items which is built up from left to right at the front (left) of the list, and a sublist of the remaining unsorted items that occupy the rest of the list. Initially, the sorted sublist is empty, and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest element in the unsorted sublist, exchanging (swapping) it with the leftmost unsorted element (putting it in sorted order), and moving the sublist boundaries one element to the right. - [Wikipedia](https://en.wikipedia.org/wiki/Selection_sort)
+[Insertion Sort](#insertion-sort) | Insertion Sort iterates, consuming one input element each repetition, and growing a sorted output list. At each iteration, insertion sort removes one element from the input data, finds the location it belongs within the sorted list, and inserts it there. It repeats until no input elements remain. - [Wikipedia](https://en.wikipedia.org/wiki/Insertion_sort)
+[Shell Sort](#shell-sort) | Shell Sort starts by sorting pairs of elements far apart from each other, then progressively reducing the gap between elements to be compared. Starting with far apart elements, it can move some out-of-place elements into position faster than a simple nearest neighbor exchange. The running time of Shell Sort is heavily dependent on the gap sequence it uses. - [Wikipedia](https://en.wikipedia.org/wiki/Shellsort)
+[Bogo Sort](#bogo-sort) | Bogo Sort is a highly inefficient sorting algorithm based on the generate and test paradigm. The function successively generates permutations of its input until it finds one that is sorted. - [Wikipedia](https://en.wikipedia.org/wiki/Bogosort)
+[Merge Sort](#merge-sort) | Merge Sort divides the unsorted list into n sublists, each containing one element (a list of one element is considered sorted). It repeatedly merges sublists to produce new sorted sublists until there is only one sublist remaining to get the final sorted list - [Wikipedia](https://en.wikipedia.org/wiki/Merge_sort)
+[Quick Sort](#quick-sort) | Quicksort is a divide-and-conquer algorithm. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively. This can be done in-place, requiring small additional amounts of memory to perform the sorting. - [Wikipedia](https://en.wikipedia.org/wiki/Quicksort)
+[Brute Force Substring Search](#brute-force-substring-search) | The Brute Force algorithm compares the pattern to the text, one character at a time, until unmatching characters are found.
+[KMP Search](#kmp-search) | The Knuth–Morris–Pratt string-searching algorithm (or KMP algorithm) searches for occurrences of a "word" W within a main "text string" S by employing the observation that when a mismatch occurs, the word itself embodies sufficient information to determine where the next match could begin, thus bypassing re-examination of previously matched characters. - [Wikipedia](https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm)
+[Run Length Encoding](#run-length-encoding) | Run-length encoding (RLE) is a form of lossless data compression in which runs of data (sequences in which the same data value occurs in many consecutive data elements) are stored as a single data value and count, rather than as the original run. This is most useful on data that contains many such runs. - [Wikipedia](https://en.wikipedia.org/wiki/Run-length_encoding)
+[Huffman Encoding](#huffman-encoding) | Huffman coding uses a specific method for choosing the representation for each symbol, resulting in a prefix code (sometimes called "prefix-free codes", that is, the bit string representing some particular symbol is never a prefix of the bit string representing any other symbol). The output from Huffman's algorithm can be viewed as a variable-length code table for encoding a source symbol (such as a character in a file). The algorithm derives this table from the estimated probability or frequency of occurrence (weight) for each possible value of the source symbol. - [Wikipedia](https://en.wikipedia.org/wiki/Huffman_coding)
 
 ## Analysis
 
@@ -384,7 +384,7 @@ If we compare all the sorting algorithms above, we can see that the linearithmic
 
 ### Brute Force Substring Search
 The brute-force algorithm works by starting at the beginning of the string and compare each character of your pattern against the subsequent characters in the string.
-Once the algorithm finishes checking the first pattern then increment the pointer to the next character in the string and start the process again. This implementation is designed to stop on the first occurence of the pattern.
+Once the algorithm finishes checking the first pattern then increment the pointer to the next character in the string and start the process again. This implementation is designed to stop on the first occurrence of the pattern.
 
 The Brute Force algorithm has the worst case of O(NW) where N is the length of the input text and W is the length of the search pattern. The best case is O(N + W) when there is no backup during the search.
 
@@ -440,7 +440,7 @@ We can see the KMP algorithm performs better than the Brute Force algorithm by a
 KMP will only be a superior choice if we are searching for large strings and the LPS table is reusable for every search, as we would need to amortise away the huge cost of building the table by doing lots of searches using that table.
 
 ### Run Length Encoding
-In RLE, the characters in the input string must first be looped over. An int counter is used to count the number of times the same character has been shown in a row. When a different character occurs, the counter value and the previous character is outputed. We continue till the end of the list. A small optimisation is added by not outputing the 1 counts.
+In RLE, the characters in the input string must first be looped over. An int counter is used to count the number of times the same character has been shown in a row. When a different character occurs, the counter value and the previous character is outputted. We continue till the end of the list. A small optimisation is added by not outputting the 1 counts.
 
 #### Runtime
 Attribute | Performance
@@ -461,7 +461,7 @@ q64x96.bin | Bitmap	| 6144 | 2296 | 0.37
 
 It is apparent that Run Length Encoding performs poorly on ASCII text as the resulting file ended up being larger than the original file by nearly 4 times (Compression Ratio > 1). 
 
-In the provided implementation of RunLength.java, 8 bits are used to store the counts. It alternates between 1 and 0 for each entry and the count is fixed to 8 bits so it pads smaller counts with 0 values. So for ASCII text, as there are not a lot of runs of 0 and 1, we ended up wasting a lot of bits on short runs.
+In the provided implementation of RunLength.java, 8 bits are used to store the counts. It alternates between 1 and 0 for each entry and the count is fixed to 8 bits so it pads smaller counts with 0 values. So, for ASCII text, as there are not a lot of runs of 0 and 1, we ended up wasting a lot of bits on short runs.
 
 Hence Run Length Encoding is widely used for bitmaps because this input data is more likely to have long runs of repeated data (i.e. pixels).
 
@@ -470,7 +470,7 @@ Hence Run Length Encoding is widely used for bitmaps because this input data is 
 This is the documentation of the final assignment of the module where we build our own utility for compressing and decompressing files.
 
 The construction of a Huffman tree can be illustrated with an example:
-If we are given the phrase **"There is no place like home"**, without double quotes, we can first construct the frequency table by counting each character occurence in the phrase.
+If we are given the phrase **"There is no place like home"**, without double quotes, we can first construct the frequency table by counting each character occurrence in the phrase.
 
 #### Frequency Table
 
@@ -495,7 +495,8 @@ m | 1
 #### Huffman Tree Construction
 
 We can then construct the Huffman Tree by selecting the smallest two nodes and merging them, until there is one root left.
-Note that: if two nodes have equal weight, it doesn't matter which one we choose as the produced code will still adhere to the Huffman Tree Rules.
+
+Note that: When we are picking the two smallest nodes, there might exist multiple nodes with the same weight. The Huffman algorithm does not specify the method for choosing the correct node in these kinds of cases. So, no matter which node we pick as long as **their weight are equal** it will still encode the message with the optimal number of bits among prefix-free codes. 
 
 ![Huffman Tree](/src/graphs/Huffman_Tree.png)
 
@@ -520,18 +521,21 @@ c | 1 | 11111
 k | 1 | 11100
 m | 1 | 11101
 
-Average bits per character can be calculated as follows: ((5 * 2) + (3 * 2 * 4) + (2 * 5) + (9 * 5)) / 27 = 3.3 bits per character, which is better than 4 bits.
+Average bits per character can be calculated as follows: ((5 * 2) + (3 * 2 * 4) + (2 * 5) + (9 * 5)) / 27 = 3.3 bits per character, which is better than 4 bits. We are taking advantage of the fact that each character has different probabilities (occurrences), so we can assign shorter codes to more frequent characters to save space, in contrast to RLE which uses a fix number of bits to represent the count.
 
 #### Get Started
-Run `javac Huffman.java` in the src directory, then use the appropiate arguments for different operation methods:  
+Run `javac Huffman.java` in the src directory, then use the appropriate arguments for different operation methods:  
 
-Read from stdin and output to stdout: 
+Read from stdin and output to stdout:
+
 `java Huffman [compress|decompress] < inputfile`  
 
 Read from input file and output to output file: 
+
 `java Huffman [compress|decompress] [inputfile] [outputfile]`  
 
 Run benchmark for provided input files: 
+
 `java Huffman benchmark`  
 
 #### Runtime
@@ -539,7 +543,7 @@ Building the Huffman Tree would take O(k log k) time where k is the size of the 
 
 In many cases, time complexity is not very important in the choice of algorithm here, since k here is the number of symbols in the alphabet, which is typically a very small number (compared to the length of the message to be encoded); whereas complexity analysis concerns the behavior when k grows to be very large.
 
-For the compressing operation, it would take O(n + k log k) where n is the size of the text and k log k is the time to build the Huffman Tree, note that the k log k part is offen negligible since the char set size is usually small.
+For the compressing operation, it would take O(n + k log k) where n is the size of the text and k log k is the time to build the Huffman Tree, note that the k log k part is often negligible since the char set size is usually small.
 
 Similar to the compressing operation, decompression would also take O(n + k log k) time since we need to reconstruct the Huffman Tree again and decode each individual character in the input.
 
@@ -550,7 +554,7 @@ The compressed files can be found under src/compressed_files/ and has the file n
 
 The input file of my choosing is bee.txt which contains the entire bee movie script.
 
-I have written a method called generateCompressionAnalysis() in Huffman.java which generates the data Huffman.txt, by compressing and decompressing the input files and recording the time taken and also the size difference.
+I have written a method called generateCompressionAnalysis() in Huffman.java which generates the data Huffman.txt, by compressing and decompressing the input files and recording the time taken and also recording the size difference.
 
 If we format the data into tabular form, we would get the following result:
 
@@ -569,6 +573,39 @@ If we plot the compression time and decompression time relative to the input siz
 
 We can see that both the compression and decompression time grows linearly when the input increases which is the expected result since the algorithm is effectively O(n) since the character set is not large.
 
-Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small (genomeVirus.txt) as the file is shrinked to almost 25% of its original size. 
+Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small (genomeVirus.txt) and the file is shrinked to almost 25% of its original size. 
 
-Besides, for normal text files with english text, the compression ratio is normally around 50-60% since the english language contains quite a lot of redundacies.
+Besides, for normal text files with English text, the compression ratio is normally around 50-60% since the English language contains quite a lot of redundancies.
+
+##### So, what happens if we compress a file repeatedly? (is there an end to this?)
+
+To prove that a universal algorithm **does not exist**, which means we will eventually reach a point where the file could no longer be compressed any further (compression ratio >= 1), I wrote the method repeatedCompression() in Huffman.java to prove that my hypothesis is indeed correct.
+
+The chosen file is bee.txt in this instance, but it can be done to any file.
+
+The results are outputted to repeated_compression.txt, and can be summarised as follows:
+Count |	Original Bits	| Compressed Bits	| Compression Ratio
+--|--|--|--
+1	| 401112 | 231976 | 0.578332
+2	| 231976 | 231832	| 0.999379
+3	| 231832 | 234376 | 1.010973
+
+With just 3 iterations, we are no longer able to shrink the file any further, as the compression ratio reaches 1. Also note that with each iteration the compression ratio increases very minimally (diminishing returns).
+
+#### Comparison against RLE
+I have written a modified version of RunLength.java which is named ModifiedRLE.java, to easily generate data for RLE (with identical format as the previous analysis) and can be found at RLE.txt. The RLE compressed files will have the file name (name_RLE_compressed.*) where * is the extension of the respective file and filename is the corresponding input file name.
+
+##### RLE
+File	| Input Size | Compressed Size | Compression Ratio | Compression Time |	Decompression Time | Decompressed Size
+-- | -- | -- | -- | -- | -- | --
+q32x48.bin | 1536 | 1144 | 0.744792 | 157464 | 213198 | 1536
+medTale.txt | 45056 | 182520 | 4.050959 | 5900426 | 5033866 | 45056
+genomeVirus.txt | 50008 | 223632 | 4.471924 | 1785293 | 2347047 | 50008
+bee.txt	| 401112 | 1615848 | 4.028421 | 7766411 | 11706178 | 401112
+mobydick.txt | 9531704 | 38698936 | 4.060023 | 96692046 | 144633228 | 9531704
+
+If we compare the RLE data to the Huffman data, we can see that Huffman has higher compression ratio overall. RLE only works on binary files (Bit Maps) is literally useless for ASCII text compression.
+
+##### Why did the Huffman Algorithm perform better on q32x48.bin even though RLE is optimised for binary files?
+
+The Huffman algorithm can work properly for any 8-bit value in each 8-bit character, and hence can be applied to **any byte stream**. In the case of the binary bit map file, Huffman compression essentially discovers a lot of 00000000 and 11111111 characters, so those runs are encoded with a smaller encoding. In the case of RLE, although it is optimised for long runs the count will still take up 8 bits which contributes to a lot of wasted space.
