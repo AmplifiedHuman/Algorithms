@@ -44,6 +44,8 @@ public class Huffman {
         if (!huffman.isStandardOutput()) {
             huffman.getOutput().close();
         }
+
+        // repeatedCompression();
     }
 
     public static void generateCompressionAnalysis() {
@@ -138,6 +140,50 @@ public class Huffman {
             stream.readBoolean();
         }
         return count;
+    }
+
+    private static void repeatedCompression() {
+        try (FileWriter compressionResult = new FileWriter(new File(
+                "src/compressed_files/repeated_compression.txt"))) {
+            Huffman huffman = new Huffman();
+            // feed initial input and output file
+            huffman.setInput(new BinaryIn("src/input_files/bee.txt"));
+            huffman.setOutput(new BinaryOut("src/compressed_files/bee_repeated_1.txt"));
+            int count = 1;
+            long originalBits = countBits(new BinaryIn("src/input_files/bee.txt"));
+            huffman.compress();
+            long compressedBits = countBits(new BinaryIn("src/compressed_files/bee_repeated_1.txt"));
+            double compressionRatio = compressedBits * 1.0 / originalBits;
+            huffman.getOutput().close();
+
+            while (compressionRatio <= 1) {
+                compressionResult.write(String.format("%d %d %d %f\n", count, originalBits, compressedBits,
+                        compressionRatio));
+                count++;
+                // alternate between the files
+                String inputFile;
+                String outputFile;
+                if (count % 2 == 0) {
+                    inputFile = "src/compressed_files/bee_repeated_1.txt";
+                    outputFile = "src/compressed_files/bee_repeated_2.txt";
+                } else {
+                    outputFile = "src/compressed_files/bee_repeated_1.txt";
+                    inputFile = "src/compressed_files/bee_repeated_2.txt";
+                }
+                originalBits = countBits(new BinaryIn(inputFile));
+                huffman.setInput(new BinaryIn(inputFile));
+                huffman.setOutput(new BinaryOut(outputFile));
+                huffman.compress();
+                compressedBits = countBits(new BinaryIn(outputFile));
+                compressionRatio = compressedBits * 1.0 / originalBits;
+                huffman.getOutput().close();
+            }
+            compressionResult.write(String.format("%d %d %d %f\n", count, originalBits, compressedBits,
+                    compressionRatio));
+        } catch (IOException ex) {
+            System.out.println("IO error occurred");
+            ex.printStackTrace();
+        }
     }
 
     public void compress() {
