@@ -47,7 +47,7 @@ public class Huffman {
     }
 
     public static void generateCompressionAnalysis() {
-        try (FileWriter compressionResult = new FileWriter(new File("./output_files/compression.txt"))) {
+        try (FileWriter compressionResult = new FileWriter(new File("./compressed_files/Huffman.txt"))) {
             String[] files = {"medTale.txt", "mobydick.txt", "q32x48.bin", "genomeVirus.txt", "bee.txt"};
             for (String file : files) {
                 // records compression information
@@ -250,11 +250,11 @@ public class Huffman {
         return out;
     }
 
-    private void setOutput(BinaryOut out) {
+    void setOutput(BinaryOut out) {
         this.out = out;
     }
 
-    private void setInput(BinaryIn in) {
+    void setInput(BinaryIn in) {
         this.in = in;
     }
 
