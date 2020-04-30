@@ -382,5 +382,193 @@ When we compare all the efficient sorts listed above, we can see that the enhanc
 
 If we compare all the sorting algorithms above, we can see that the linearithmic (O(n log n)) algorithms outperform the slower O(n<sup>2</sup>) algorithms by a lot. So, it is clear that asymptotic analysis can save us a lot of time by estimating how the algorithm will scale as the input grows.
 
+### Brute Force Substring Search
+The brute-force algorithm works by starting at the beginning of the string and compare each character of your pattern against the subsequent characters in the string.
+Once the algorithm finishes checking the first pattern then increment the pointer to the next character in the string and start the process again. This implementation is designed to stop on the first occurence of the pattern.
+
+The Brute Force algorithm has the worst case of O(NW) where N is the length of the input text and W is the length of the search pattern. The best case is O(N + W) when there is no backup during the search.
+
+#### Runtime
+Attribute | Performance
+--|--
+Worst Case | O(NW)
+Best Case | O(N + W)
+Space Complexity | O(1)
+
+#### Performance
+
+![BruteForceSearch](/src/graphs/Brute_Force_Search.png)
+
+[Graph Link](https://docs.google.com/spreadsheets/d/1HenaccKrhxz3L9JKX1EPfWJ87_le9FmdZpILWAapYhw/edit?usp=sharing "Graph Link")
+
+From the graph, we can see that the running time increases proportionally when the input grows larger.
+
+### KMP Search
+KMP improves upon this by taking advantage of prior knowledge about the text being searched. The key idea then behind KMP is that if we already have matched the first x characters of the pattern and then we encounter a mismatch, we don’t necessarily have to move to the very next character in the search text. We might be able to take advantage of our knowledge of the pattern we’re looking for and the characters we’ve already encountered in the search text to jump ahead a little.
+
+KMP has two efficiencies by taking advantage of prior knowledge:
+ - We can skip some iterations for which we know no match is possible and
+ - We can also skip some iterations in the inner loop
+ 
+Steps:
+ - **Preprocess Pattern** - the search pattern needs to be preprocessed to create a longest prefix suffix array to aid the search process.
+ - **Searching** - we use the constructed LPS array to search for the pattern and determine how much steps do we need to jump back in the pattern array if a mismatch occurs.
+
+#### Runtime
+Attribute | Performance
+--|--
+Worst Case | O(N + W)
+Best Case | O(N + W)
+Space Complexity | O(W), for storing LPS array
+
+#### Performance
+
+![KMPSearch](/src/graphs/KMP_Search.png)
+
+[Graph Link](https://docs.google.com/spreadsheets/d/1HenaccKrhxz3L9JKX1EPfWJ87_le9FmdZpILWAapYhw/edit?usp=sharing "Graph Link")
+
+From the graph, we can see that the running time increases proportionally when the input grows larger.
+
+### Searching Comparison
+
+![Searching Comparison](/src/graphs/Searching_Comparison.png)
+
+[Graph Link](https://docs.google.com/spreadsheets/d/1HenaccKrhxz3L9JKX1EPfWJ87_le9FmdZpILWAapYhw/edit?usp=sharing "Graph Link")
+
+We can see the KMP algorithm performs better than the Brute Force algorithm by a small margin. This is due to the constant factor of the KMP algorithm is much larger than the constant factor of the Brute Force algorithm. The value of n has to be awfully big, and the number of sub-optimal partial matches has to be very large, for the KMP algorithm to win over the blazingly fast naive algorithm.
+
+KMP will only be a superior choice if we are searching for large strings and the LPS table is reusable for every search, as we would need to amortise away the huge cost of building the table by doing lots of searches using that table.
+
+### Run Length Encoding
+In RLE, the characters in the input string must first be looped over. An int counter is used to count the number of times the same character has been shown in a row. When a different character occurs, the counter value and the previous character is outputed. We continue till the end of the list. A small optimisation is added by not outputing the 1 counts.
+
+#### Runtime
+Attribute | Performance
+--|--
+Worst Case | O(n)
+Best Case | O(n)
+Space Complexity | O(1)
+
+#### Performance
+
+Name | Type | Input Size | Compressed Size | Compression Ratio
+--|--|--|--|--
+4runs.bin | Binary | 40	| 32 | 0.8
+abra.txt | Text |	104 |	456 | 4.38
+mobydick.txt | Text	| 9531704	| 38698936 | 4.06
+q32x48.bin | Bitmap | 1536 | 1144 | 0.74
+q64x96.bin | Bitmap	| 6144 | 2296 | 0.37
+
+It is apparent that Run Length Encoding performs poorly on ASCII text as the resulting file ended up being larger than the original file by nearly 4 times (Compression Ratio > 1). 
+
+In the provided implementation of RunLength.java, 8 bits are used to store the counts. It alternates between 1 and 0 for each entry and the count is fixed to 8 bits so it pads smaller counts with 0 values. So for ASCII text, as there are not a lot of runs of 0 and 1, we ended up wasting a lot of bits on short runs.
+
+Hence Run Length Encoding is widely used for bitmaps because this input data is more likely to have long runs of repeated data (i.e. pixels).
 
 
+### Huffman Encoding
+This is the documentation of the final assignment of the module where we build our own utility for compressing and decompressing files.
+
+The construction of a Huffman tree can be illustrated with an example:
+If we are given the phrase **"There is no place like home"**, without double quotes, we can first construct the frequency table by counting each character occurence in the phrase.
+
+#### Frequency Table
+
+Character | Frequency
+-- | --
+e | 5
+space | 5
+h | 2
+i | 2
+o | 2
+l | 2
+T | 1
+r | 1
+s | 1
+n | 1
+p | 1
+a | 1
+c | 1
+k | 1
+m | 1
+
+#### Huffman Tree Construction
+
+We can then construct the Huffman Tree by selecting the smallest two nodes and merging them, until there is one root left.
+Note that: if two nodes have equal weight, it doesn't matter which one we choose as the produced code will still adhere to the Huffman Tree Rules.
+
+![Huffman Tree](/src/graphs/Huffman_Tree.png)
+
+#### Encoding Table
+After constructing the tree, we can just create the codes for each character by tracing a path from root to leaf node (aggregating the bits along the way). 
+
+Character | Frequency | Encoding
+-- | -- | --
+e | 5 | 00
+space | 5 | 01
+h | 2 | 1000
+i | 2 | 1010
+o | 2 | 1011
+l | 2 | 11000
+T | 1 | 11001
+r | 1 | 11010
+s | 1 | 11011
+n | 1 | 10010
+p | 1 | 10011
+a | 1 | 11110
+c | 1 | 11111
+k | 1 | 11100
+m | 1 | 11101
+
+Average bits per character can be calculated as follows: ((5 * 2) + (3 * 2 * 4) + (2 * 5) + (9 * 5)) / 27 = 3.3 bits per character, which is better than 4 bits.
+
+#### Get Started
+Run `javac Huffman.java` in the src directory, then use the appropiate arguments for different operation methods:  
+
+Read from stdin and output to stdout: 
+`java Huffman [compress|decompress] < inputfile`  
+
+Read from input file and output to output file: 
+`java Huffman [compress|decompress] [inputfile] [outputfile]`  
+
+Run benchmark for provided input files: 
+`java Huffman benchmark`  
+
+#### Runtime
+Building the Huffman Tree would take O(k log k) time where k is the size of the char set. (example: k = 256 (max) for ascii)
+
+In many cases, time complexity is not very important in the choice of algorithm here, since k here is the number of symbols in the alphabet, which is typically a very small number (compared to the length of the message to be encoded); whereas complexity analysis concerns the behavior when k grows to be very large.
+
+For the compressing operation, it would take O(n + k log k) where n is the size of the text and k log k is the time to build the Huffman Tree, note that the k log k part is offen negligible since the char set size is usually small.
+
+Similar to the compressing operation, decompression would also take O(n + k log k) time since we need to reconstruct the Huffman Tree again and decode each individual character in the input.
+
+
+#### Compression Analysis
+Note:
+The compressed files can be found under src/compressed_files/ and has the file name "filename_compressed.*" where * is the extension of the respective file and filename is the corresponding input file name.
+
+The input file of my choosing is bee.txt which contains the entire bee movie script.
+
+I have written a method called generateCompressionAnalysis() in Huffman.java which generates the data Huffman.txt, by compressing and decompressing the input files and recording the time taken and also the size difference.
+
+If we format the data into tabular form, we would get the following result:
+
+File	| Input Size | Compressed Size | Compression Ratio | Compression Time |	Decompression Time | Decompressed Size
+-- | -- | -- | -- | -- | -- | --
+q32x48.bin | 1536 | 816 | 0.53125 | 212243 | 40709 | 1536
+medTale.txt	| 45056 |	23912 |	0.530717 | 6846695 | 2174448 | 45056
+genomeVirus.txt | 50008 | 12576 | 0.25148 | 896080 | 270402 | 50008
+bee.txt	| 401112 | 231976 | 0.578332 | 14536900 | 2107232 | 401112
+mobydick.txt | 9531704 | 5341208 | 0.560362 | 113272887 | 46806047 | 9531704
+
+If we plot the compression time and decompression time relative to the input size, we would obtain the following graph:
+![Huffman Compression Decompression Graph](/src/graphs/Huffman_Compress_Decompress.png)
+
+[Graph Link](https://docs.google.com/spreadsheets/d/18CtPVsTnGmuOjtCjKfd8xp5nqEoQ8kqKwdQVQFFS7to/edit?usp=sharing "Graph Link")
+
+We can see that both the compression and decompression time grows linearly when the input increases which is the expected result since the algorithm is effectively O(n) since the character set is not large.
+
+Another interesting observation is that the algorithm achieved extraordinary performance when the character set is small (genomeVirus.txt) as the file is shrinked to almost 25% of its original size. 
+
+Besides, for normal text files with english text, the compression ratio is normally around 50-60% since the english language contains quite a lot of redundacies.
