@@ -10,7 +10,7 @@ public class Main {
                 printHelpMessage();
                 System.out.print("Selection: ");
                 choice = reader.nextLine();
-            } while (!choice.matches("[0-7xX]"));
+            } while (!choice.matches("[0-5xX]"));
             // terminates if x encountered
             if (choice.equalsIgnoreCase("x")) {
                 break;
