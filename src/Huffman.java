@@ -33,16 +33,21 @@ public class Huffman {
         }
         // huffman operation
         String option = args[0];
+        long startTime = System.nanoTime();
+        long elapsedTime = 0;
         if (option.equalsIgnoreCase("compress")) {
             huffman.compress();
+            elapsedTime = System.nanoTime() - startTime;
         } else if (option.equalsIgnoreCase("decompress")) {
             huffman.decompress();
+            elapsedTime = System.nanoTime() - startTime;
         } else {
             printHelpMessage();
         }
 
         if (!huffman.isStandardOutput()) {
             huffman.getOutput().close();
+            System.out.println("Elapsed Time: " + (double) elapsedTime / 1_000_000_000.0 + "s");
         }
 
         // repeatedCompression();
