@@ -526,6 +526,7 @@ This is the documentation of the final assignment of the module where we build o
 The construction of a Huffman tree can be illustrated with an example:
 If we are given the phrase **"There is no place like home"**, without double quotes, we can first construct the frequency table by counting each character occurrence in the phrase.
 
+PDF form of example: [huffman_example.pdf](../master/huffman_example.pdf) 
 #### Frequency Table
 
 Character | Frequency
