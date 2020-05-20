@@ -21,7 +21,7 @@ consolidates our previous asymptotic analysis result.
 
 #### 3SumB
 ##### Source Code
- - [ThreeSumB.java](../master/src/ThreeSumB.java)
+ - [ThreeSumB.java](../../master/src/ThreeSumB.java)
 
 For 3SumB, the array is sorted (O(n log n)) first and there are two for loops and a binary search. The overall runtime is O(n<sup>2</sup> log n).
 
